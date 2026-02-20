@@ -17,7 +17,7 @@ Sube una foto de tu ropa → AWS Rekognition detecta la prenda → StyleMatch te
 
 <br/>
 
-[![Ver demo en YouTube](https://img.youtube.com/vi/SjBJ0mtn7ZA/maxresdefault.jpg)](https://www.youtube.com/watch?v=SjBJ0mtn7ZA) 
+[![Ver demo en YouTube](https://img.youtube.com/vi/SjBJ0mtn7ZA/0.jpg)](https://www.youtube.com/watch?v=SjBJ0mtn7ZA) 
 *Click en la imagen para ver la demo*
 
 </div>
