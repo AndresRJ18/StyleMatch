@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StyleMatch — Fashion Finder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Montserrat:wght@300;400;500;600&family=Courier+Prime&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C49E6C;
+      --dark: #0D0D0D;
+      --light-text: #F0EDE8;
+      --rose: #D4638F;
+      --blush: #FFF0F5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0a0a0a;
+      color: #F0EDE8;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2.5rem;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196,158,108,0.15);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+    .logo span { color: var(--gold); }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(196,158,108,0.12);
+      border: 1px solid rgba(196,158,108,0.3);
+      color: var(--gold);
+      padding: 0.35rem 0.8rem;
+      border-radius: 2px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(196,158,108,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(212,99,143,0.05) 0%, transparent 60%);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(196,158,108,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(196,158,108,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 100%);
+    }
+
+    .hero-eyebrow {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(240,237,232,0.55);
+      max-width: 480px;
+      line-height: 1.8;
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      position: relative;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--gold);
+      color: var(--dark);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      border-radius: 2px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: rgba(240,237,232,0.7);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      border: 1px solid rgba(240,237,232,0.2);
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(196,158,108,0.4);
+      color: var(--gold);
+    }
+
+    /* ── FLOW SECTION ── */
+    .section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(196,158,108,0.2);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .section-title em { color: var(--gold); font-style: italic; }
+
+    .section-sub {
+      font-size: 0.88rem;
+      color: rgba(240,237,232,0.5);
+      line-height: 1.9;
+      max-width: 560px;
+      margin-bottom: 3.5rem;
+    }
+
+    /* Flow steps */
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      border: 1px solid rgba(196,158,108,0.12);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .flow-step {
+      padding: 2.5rem 2rem;
+      background: rgba(196,158,108,0.02);
+      transition: background 0.3s;
+      position: relative;
+    }
+    .flow-step:hover { background: rgba(196,158,108,0.06); }
+    .flow-step + .flow-step {
+      border-left: 1px solid rgba(196,158,108,0.12);
+    }
+
+    .flow-num {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.65rem;
+      color: rgba(196,158,108,0.5);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .flow-icon {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .flow-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .flow-desc {
+      font-size: 0.78rem;
+      color: rgba(240,237,232,0.45);
+      line-height: 1.7;
+    }
+
+    /* ── ARCH ── */
+    .arch-section {
+      padding: 6rem 2rem;
+      background: rgba(196,158,108,0.02);
+      border-top: 1px solid rgba(196,158,108,0.08);
+      border-bottom: 1px solid rgba(196,158,108,0.08);
+    }
+
+    .arch-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .arch-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+
+    .arch-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.5rem 1.8rem;
+      border: 1px solid rgba(196,158,108,0.2);
+      border-radius: 4px;
+      background: rgba(13,13,13,0.8);
+      min-width: 130px;
+      text-align: center;
+      transition: border-color 0.3s, background 0.3s;
+      cursor: default;
+    }
+    .arch-node:hover {
+      border-color: var(--gold);
+      background: rgba(196,158,108,0.06);
+    }
+
+    .arch-node-icon { font-size: 1.6rem; }
+
+    .arch-node-label {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .arch-node-sub {
+      font-size: 0.7rem;
+      color: rgba(240,237,232,0.35);
+    }
+
+    .arch-arrow {
+      font-size: 1.2rem;
+      color: rgba(196,158,108,0.35);
+      padding: 0 0.5rem;
+      flex-shrink: 0;
+    }
+
+    /* ── STACK ── */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .stack-card {
+      padding: 2rem;
+      border: 1px solid rgba(196,158,108,0.12);
+      border-radius: 4px;
+      background: rgba(196,158,108,0.02);
+      transition: border-color 0.3s;
+    }
+    .stack-card:hover { border-color: rgba(196,158,108,0.3); }
+
+    .stack-card-head {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .stack-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .icon-aws { background: rgba(255,153,0,0.15); }
+    .icon-react { background: rgba(97,218,251,0.1); }
+    .icon-tf { background: rgba(99,75,181,0.15); }
+
+    .stack-card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+
+    .stack-items { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .stack-items li {
+      font-size: 0.78rem;
+      color: rgba(240,237,232,0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .stack-items li::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    /* ── DEMO MOCK ── */
+    .mock-section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .mock-window {
+      border: 1px solid rgba(196,158,108,0.18);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #111;
+      margin-top: 3rem;
+    }
+
+    .mock-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.2rem;
+      background: #1a1a1a;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .mock-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .mock-dot.red { background: #FF5F57; }
+    .mock-dot.yellow { background: #FFBD2E; }
+    .mock-dot.green { background: #28CA41; }
+    .mock-url {
+      margin-left: 1rem;
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .mock-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 400px;
+    }
+
+    .mock-left {
+      padding: 3rem;
+      background: #0D0D0D;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+      border-right: 1px solid rgba(196,158,108,0.1);
+    }
+
+    .mock-right {
+      padding: 3rem;
+      background: #FFF0F5;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .mock-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #F0EDE8;
+    }
+    .mock-logo span { color: #C49E6C; }
+
+    .mock-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      line-height: 1.2;
+      color: #F0EDE8;
+    }
+
+    .mock-sub {
+      font-size: 0.75rem;
+      color: rgba(240,237,232,0.45);
+      line-height: 1.7;
+      max-width: 240px;
+    }
+
+    .mock-upload {
+      border: 1px dashed rgba(196,158,108,0.35);
+      border-radius: 2px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .mock-upload-text {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.65rem;
+      color: rgba(196,158,108,0.6);
+      letter-spacing: 0.1em;
+    }
+
+    .mock-btn {
+      display: inline-block;
+      background: #C49E6C;
+      color: #0D0D0D;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.7rem 1.4rem;
+      border-radius: 2px;
+      width: fit-content;
+    }
+
+    /* Right (mujer) */
+    .mock-heading-r {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      line-height: 1.2;
+      color: #2D1F2B;
+    }
+    .mock-sub-r {
+      font-size: 0.75rem;
+      color: rgba(45,31,43,0.45);
+      line-height: 1.7;
+      max-width: 240px;
+    }
+    .mock-upload-r {
+      border: 1px dashed rgba(212,99,143,0.35);
+      border-radius: 12px;
+      padding: 1.2rem;
+      text-align: center;
+    }
+    .mock-upload-text-r {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.65rem;
+      color: rgba(212,99,143,0.6);
+      letter-spacing: 0.1em;
+    }
+    .mock-btn-r {
+      display: inline-block;
+      background: #D4638F;
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.7rem 1.4rem;
+      border-radius: 20px;
+      width: fit-content;
+    }
+
+    /* ── RESULTS MOCK ── */
+    .result-mock {
+      margin-top: 1.5rem;
+      border: 1px solid rgba(196,158,108,0.15);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .result-top {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .result-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .result-info { flex: 1; }
+    .result-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+
+    .result-price {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+
+    .result-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .badge {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid rgba(196,158,108,0.3);
+      border-radius: 2px;
+      color: rgba(196,158,108,0.8);
+      background: rgba(196,158,108,0.05);
+    }
+
+    .result-stores {
+      padding: 1.2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .store-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.02);
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .store-row:hover { background: rgba(196,158,108,0.05); border-color: rgba(196,158,108,0.2); }
+
+    .store-name {
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+    .store-location {
+      font-size: 0.68rem;
+      color: rgba(240,237,232,0.35);
+      margin-top: 0.2rem;
+    }
+    .store-price {
+      font-family: 'Courier Prime', monospace;
+      font-size: 0.78rem;
+      color: var(--gold);
+    }
+    .store-link {
+      font-size: 0.65rem;
+      color: rgba(196,158,108,0.5);
+      padding: 0.3rem 0.7rem;
+      border: 1px solid rgba(196,158,108,0.2);
+      border-radius: 2px;
+    }
+
+    /* ── FEATURES ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      padding: 2rem;
+      border: 1px solid rgba(196,158,108,0.1);
+      border-radius: 4px;
+      background: linear-gradient(135deg, rgba(196,158,108,0.03), transparent);
+      transition: border-color 0.3s, transform 0.2s;
+    }
+    .feature-card:hover {
+      border-color: rgba(196,158,108,0.25);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .feature-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-desc {
+      font-size: 0.78rem;
+      color: rgba(240,237,232,0.45);
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(196,158,108,0.1);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+    .footer-logo span { color: var(--gold); }
+
+    .footer-sub {
+      font-size: 0.72rem;
+      color: rgba(240,237,232,0.3);
+      letter-spacing: 0.08em;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+    .footer-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-credit {
+      font-size: 0.7rem;
+      color: rgba(240,237,232,0.2);
+      letter-spacing: 0.05em;
+    }
+    .footer-credit a { color: rgba(196,158,108,0.5); text-decoration: none; }
+
+    /* animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up {
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+    .delay-3 { animation-delay: 0.45s; }
+    .delay-4 { animation-delay: 0.6s; }
+
+    @media (max-width: 700px) {
+      .mock-body { grid-template-columns: 1fr; }
+      .mock-right { border-top: 1px solid rgba(0,0,0,0.1); }
+      .arch-diagram { gap: 0.5rem; }
+      .arch-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Style<span>Match</span></div>
+    <ul class="nav-links">
+      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#arquitectura">Arquitectura</a></li>
+      <li><a href="#stack">Stack</a></li>
+    </ul>
+    <span class="nav-badge">Lima, Perú</span>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <p class="hero-eyebrow fade-up">Proyecto Cloud · AWS + React · Lima, Perú</p>
+    <h1 class="fade-up delay-1">Encuentra tu<br/><em>estilo.</em></h1>
+    <p class="hero-desc fade-up delay-2">
+      Sube una foto de tu ropa y StyleMatch usa AWS Rekognition para detectar la prenda y mostrarte dónde comprarla en Lima.
+    </p>
+    <div class="hero-cta fade-up delay-3">
+      <a href="https://github.com/AndresRJ18/stylematch" target="_blank" class="btn-primary">Ver en GitHub →</a>
+      <a href="#como-funciona" class="btn-secondary">Cómo funciona</a>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section class="section" id="como-funciona">
+    <div class="section-label">Flujo de la app</div>
+    <h2 class="section-title">Del upload al<br/><em>resultado</em> en segundos</h2>
+    <p class="section-sub">
+      Cuatro pasos serverless convierten una foto de ropa en una lista de tiendas donde conseguirla en Lima.
+    </p>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <span class="flow-icon">📸</span>
+        <div class="flow-name">Upload</div>
+        <p class="flow-desc">El usuario arrastra o selecciona una foto. El frontend la convierte a base64 y la manda al endpoint.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <span class="flow-icon">☁️</span>
+        <div class="flow-name">S3 + Rekognition</div>
+        <p class="flow-desc">Lambda guarda la imagen en S3 y llama a Rekognition para detectar etiquetas: prenda, color, estilo.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <span class="flow-icon">🔍</span>
+        <div class="flow-name">SerpAPI</div>
+        <p class="flow-desc">Se construye una query con la prenda detectada y "Lima Peru". SerpAPI busca resultados en Google Shopping.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <span class="flow-icon">🏪</span>
+        <div class="flow-name">Resultados</div>
+        <p class="flow-desc">El frontend muestra tiendas con precios, sedes en Lima (Jockey Plaza, Mall del Sur…) y filtros físico/online.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO MOCK -->
+  <section class="mock-section" id="demo">
+    <div class="section-label">Interfaz</div>
+    <h2 class="section-title">Dos mundos,<br/>un solo <em>propósito</em></h2>
+    <p class="section-sub">
+      Landing dividida entre el modo hombre y el modo mujer, cada uno con su propia paleta, tipografía y personalidad.
+    </p>
+    <!-- Landing mock -->
+    <div class="mock-window">
+      <div class="mock-titlebar">
+        <div class="mock-dot red"></div>
+        <div class="mock-dot yellow"></div>
+        <div class="mock-dot green"></div>
+        <span class="mock-url">stylematch · landing</span>
+      </div>
+      <div class="mock-body">
+        <!-- Hombre -->
+        <div class="mock-left">
+          <div class="mock-logo">Style<span>Match</span></div>
+          <div class="mock-heading">Tu estilo.<br/>Tu ciudad.</div>
+          <p class="mock-sub">Escanea tu ropa y encuentra dónde comprarla en Lima.</p>
+          <div class="mock-upload">
+            <div class="mock-upload-text">ARRASTRA TU FOTO AQUÍ</div>
+          </div>
+          <div class="mock-btn">Escanear prenda</div>
+        </div>
+        <!-- Mujer -->
+        <div class="mock-right">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;color:#2D1F2B;">Style<span style="color:#D4638F;">Match</span></div>
+          <div class="mock-heading-r">Tu estilo.<br/>Tu ciudad.</div>
+          <p class="mock-sub-r">Escanea tu ropa y encuentra dónde comprarla en Lima.</p>
+          <div class="mock-upload-r">
+            <div class="mock-upload-text-r">ARRASTRA TU FOTO AQUÍ</div>
+          </div>
+          <div class="mock-btn-r">Escanear prenda</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results mock -->
+    <div class="result-mock" style="margin-top:1.5rem;">
+      <div class="mock-titlebar">
+        <div class="mock-dot red"></div>
+        <div class="mock-dot yellow"></div>
+        <div class="mock-dot green"></div>
+        <span class="mock-url">stylematch · resultados</span>
+      </div>
+      <div class="result-top">
+        <div class="result-img">🧥</div>
+        <div class="result-info">
+          <div class="result-name">Chaqueta de cuero</div>
+          <div class="result-price">S/ 180 – S/ 450 estimado</div>
+        </div>
+      </div>
+      <div class="result-badges">
+        <span class="badge">Jacket</span>
+        <span class="badge">Leather</span>
+        <span class="badge">Casual</span>
+        <span class="badge">Outerwear</span>
+        <span class="badge">Fashion</span>
+      </div>
+      <div class="result-stores">
+        <div class="store-row">
+          <div>
+            <div class="store-name">Falabella</div>
+            <div class="store-location">Jockey Plaza · San Isidro</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <span class="store-price">S/ 249.90</span>
+            <span class="store-link">Ver →</span>
+          </div>
+        </div>
+        <div class="store-row">
+          <div>
+            <div class="store-name">Ripley</div>
+            <div class="store-location">Mall del Sur · Online</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <span class="store-price">S/ 199.00</span>
+            <span class="store-link">Ver →</span>
+          </div>
+        </div>
+        <div class="store-row">
+          <div>
+            <div class="store-name">Zara</div>
+            <div class="store-location">Larcomar · Miraflores</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <span class="store-price">S/ 389.00</span>
+            <span class="store-link">Ver →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARQUITECTURA -->
+  <section class="arch-section" id="arquitectura">
+    <div class="arch-inner">
+      <div class="section-label">Cloud design</div>
+      <h2 class="section-title">Arquitectura<br/><em>serverless</em> en AWS</h2>
+      <p class="section-sub">
+        Todo desplegado con Terraform en la región us-east-1. Sin servidores que administrar, sin costos fijos — 100 % free tier.
+      </p>
+      <div class="arch-diagram">
+        <div class="arch-node">
+          <span class="arch-node-icon">🌐</span>
+          <span class="arch-node-label">Frontend</span>
+          <span class="arch-node-sub">Vercel + React</span>
+        </div>
+        <span class="arch-arrow">→</span>
+        <div class="arch-node">
+          <span class="arch-node-icon">🔀</span>
+          <span class="arch-node-label">API Gateway</span>
+          <span class="arch-node-sub">REST · CORS</span>
+        </div>
+        <span class="arch-arrow">→</span>
+        <div class="arch-node">
+          <span class="arch-node-icon">λ</span>
+          <span class="arch-node-label">Lambda</span>
+          <span class="arch-node-sub">Python 3.11</span>
+        </div>
+        <span class="arch-arrow">→</span>
+        <div class="arch-node">
+          <span class="arch-node-icon">👁️</span>
+          <span class="arch-node-label">Rekognition</span>
+          <span class="arch-node-sub">Visión por IA</span>
+        </div>
+        <br style="flex-basis:100%;height:0;"/>
+        <div style="width:100%;display:flex;justify-content:center;align-items:center;gap:0;margin-top:1rem;flex-wrap:wrap;">
+          <div style="width:1px;height:40px;background:rgba(196,158,108,0.2);margin:0 5.5rem;"></div>
+          <div style="width:1px;height:40px;background:rgba(196,158,108,0.2);margin:0 5.5rem;"></div>
+        </div>
+        <div style="width:100%;display:flex;justify-content:center;gap:12rem;flex-wrap:wrap;">
+          <div class="arch-node">
+            <span class="arch-node-icon">🪣</span>
+            <span class="arch-node-label">S3</span>
+            <span class="arch-node-sub">Lifecycle 7 días</span>
+          </div>
+          <div class="arch-node">
+            <span class="arch-node-icon">🛒</span>
+            <span class="arch-node-label">SerpAPI</span>
+            <span class="arch-node-sub">Google Shopping</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="section" id="stack">
+    <div class="section-label">Tecnologías</div>
+    <h2 class="section-title">Stack completo<br/><em>explicado</em></h2>
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="stack-card-head">
+          <div class="stack-card-icon icon-aws">☁️</div>
+          <div class="stack-card-title">AWS Backend</div>
+        </div>
+        <ul class="stack-items">
+          <li>Lambda Python 3.11 · 512 MB · 30 s timeout</li>
+          <li>API Gateway REST con CORS manual</li>
+          <li>Rekognition detect_labels</li>
+          <li>S3 con lifecycle de 7 días</li>
+          <li>CloudWatch Logs · 14 días retención</li>
+          <li>IAM con least privilege</li>
+        </ul>
+      </div>
+      <div class="stack-card">
+        <div class="stack-card-head">
+          <div class="stack-card-icon icon-react">⚛️</div>
+          <div class="stack-card-title">Frontend</div>
+        </div>
+        <ul class="stack-items">
+          <li>React 18 · Vercel</li>
+          <li>Cormorant Garamond · Montserrat · Courier Prime</li>
+          <li>Animaciones CSS puras (float, shimmer, fadeUp)</li>
+          <li>Tema dual: hombre/mujer con paletas distintas</li>
+          <li>Drag & drop de imágenes</li>
+          <li>Modal de contacto + loading steps</li>
+        </ul>
+      </div>
+      <div class="stack-card">
+        <div class="stack-card-head">
+          <div class="stack-card-icon icon-tf">🏗️</div>
+          <div class="stack-card-title">Infraestructura</div>
+        </div>
+        <ul class="stack-items">
+          <li>Terraform — IaC completo</li>
+          <li>random_id para nombres únicos globales</li>
+          <li>archive_file para auto-zip del Lambda</li>
+          <li>SerpAPI Google Shopping (Lima Peru query)</li>
+          <li>Secrets en terraform.tfvars (fuera de git)</li>
+          <li>100 % AWS Free Tier</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="section-label">Destacados</div>
+    <h2 class="section-title">Lo que hace<br/><em>diferente</em> este proyecto</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🇵🇪</span>
+        <div class="feature-title">Foco local: Lima</div>
+        <p class="feature-desc">Las tiendas incluyen sedes reales — Jockey Plaza, Mall del Sur, Larcomar — con precios en soles.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎨</span>
+        <div class="feature-title">UI de doble personalidad</div>
+        <p class="feature-desc">Modo hombre con estética dark & dorada, modo mujer con blush & rosa. Misma app, dos experiencias.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🤖</span>
+        <div class="feature-title">IA real, no simulada</div>
+        <p class="feature-desc">AWS Rekognition detecta prenda, color y estilo desde la foto. Sin modelos entrenados por mí — AWS hace el trabajo pesado.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <div class="feature-title">Serverless de verdad</div>
+        <p class="feature-desc">Zero servidores, zero mantenimiento. API Gateway + Lambda escalan solos. Costo mensual real: S/ 0.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🏗️</span>
+        <div class="feature-title">IaC con Terraform</div>
+        <p class="feature-desc">Toda la infraestructura en código. Un solo `terraform apply` levanta el backend completo desde cero.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🛡️</span>
+        <div class="feature-title">Buenas prácticas cloud</div>
+        <p class="feature-desc">IAM least privilege, secrets fuera de git, lifecycle en S3, logs en CloudWatch, CORS bien configurado.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Style<span>Match</span></div>
+    <p class="footer-sub">Fashion Finder · Lima, Perú · 2025</p>
+    <ul class="footer-links">
+      <li><a href="https://github.com/AndresRJ18" target="_blank">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/andres-rodas-802309272" target="_blank">LinkedIn</a></li>
+      <li><a href="mailto:andrescloud18sj@gmail.com">Email</a></li>
+    </ul>
+    <p class="footer-credit">
+      Hecho con cariño por <a href="https://github.com/AndresRJ18" target="_blank">Andres</a> & Chiara · UPCH · Ingeniería Informática
+    </p>
+  </footer>
+
+</body>
+</html>

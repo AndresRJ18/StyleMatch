@@ -1,117 +1,79 @@
-# 👗 StyleMatch — Análisis de Ropa con IA
+<div align="center">
 
-Sube una foto de ropa y StyleMatch te dice qué es, de qué color, el estilo, y te muestra tiendas en Lima donde comprarla.
+# StyleMatch
 
-**Stack:** AWS Lambda + Rekognition + S3 + API Gateway, desplegado 100% con Terraform.
+### Fashion Finder con visión por computadora en AWS
+
+![AWS](https://img.shields.io/badge/AWS-Serverless-FF9900?style=flat-square&logo=amazon-aws&logoColor=white)
+![Terraform](https://img.shields.io/badge/Terraform-IaC-7B42BC?style=flat-square&logo=terraform)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square&logo=python&logoColor=white)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Vercel](https://img.shields.io/badge/Vercel-Frontend-000000?style=flat-square&logo=vercel)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+
+Sube una foto de tu ropa → AWS Rekognition detecta la prenda → StyleMatch te muestra dónde comprarla en Lima, Perú.
+
+[Ver Presentación](https://andresrj18.github.io/stylematch) · [Arquitectura](#arquitectura) · [Deploy](#deployment)
+
+<br/>
+
+<!-- Cuando tengas el video: reemplaza TU_VIDEO_ID con el ID de YouTube (lo que va después de ?v=) -->
+[![Ver demo en YouTube](https://img.youtube.com/vi/TU_VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=TU_VIDEO_ID)
+
+*Click en la imagen para ver la demo*
+
+</div>
+
+---
+
+## Qué hace
+
+StyleMatch analiza fotos de ropa usando inteligencia artificial y devuelve una lista de tiendas reales en Lima donde conseguir esa prenda, con precios estimados y sedes físicas (Jockey Plaza, Mall del Sur, Larcomar, entre otras).
+
+El proyecto tiene un frontend de doble personalidad: modo hombre con estética oscura y dorada, modo mujer con tonos blush y rosa. Cada modo mantiene su propia paleta, tipografía y animaciones.
 
 ---
 
 ## Arquitectura
 
 ```
-┌──────────┐     POST /analizar     ┌─────────────┐
-│ Frontend │ ──────────────────────► │ API Gateway  │
-│  (HTML)  │ ◄────────────────────── │   (REST)     │
-└──────────┘      JSON response     └──────┬──────┘
-                                           │
-                                           ▼
-                                    ┌─────────────┐
-                                    │   Lambda     │
-                                    │ (Python 3.11)│
-                                    └──┬───┬───┬──┘
-                                       │   │   │
-                              ┌────────┘   │   └────────┐
-                              ▼            ▼            ▼
-                        ┌──────────┐ ┌───────────┐ ┌─────────┐
-                        │    S3    │ │Rekognition│ │ SerpAPI │
-                        │ imágenes │ │  (labels) │ │(tiendas)│
-                        └──────────┘ └───────────┘ └─────────┘
+Usuario → React (Vercel) → API Gateway (REST) → Lambda (Python 3.11) → Rekognition
+                                                                     → S3
+                                                                     → SerpAPI (Google Shopping)
 ```
+
+Todo el backend está desplegado con **Terraform** en AWS región `us-east-1`, 100 % free tier.
+
+| Servicio | Rol |
+|----------|-----|
+| **AWS Lambda** | Lógica principal — recibe imagen, llama a Rekognition y SerpAPI |
+| **AWS Rekognition** | Detecta prenda, color y estilo desde la foto |
+| **AWS API Gateway** | REST API con CORS, stage `prod` |
+| **AWS S3** | Almacena imágenes temporalmente (lifecycle 7 días) |
+| **SerpAPI** | Busca resultados en Google Shopping con query `{prenda} Lima Peru` |
+| **Terraform** | IaC — levanta todo el backend desde cero con un solo `apply` |
+| **Vercel** | Hosting del frontend con deploy automático desde GitHub |
 
 ---
 
-## Requisitos previos
+## Stack
 
-- [Terraform](https://developer.hashicorp.com/terraform/install) >= 1.5
-- [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) configurado con credenciales
-- Python 3.11 (solo para testing local, Lambda usa su propio runtime)
-- Cuenta en [SerpAPI](https://serpapi.com/) (plan gratis: 100 búsquedas/mes)
+**Backend**
+- Python 3.11 con `boto3` (pre-instalado en Lambda)
+- Lambda 512 MB · 30 s timeout
+- IAM con least privilege (`s3:PutObject uploads/*`, `rekognition:DetectLabels`, `logs:*`)
+- CloudWatch Logs con retención de 14 días
 
-## Configuración de AWS CLI
+**Frontend**
+- React 18 — toda la app en `App.jsx` (~355 líneas)
+- Tipografías: Cormorant Garamond (títulos) · Montserrat (body) · Courier Prime (badges)
+- Animaciones CSS puras: `float`, `shimmer`, `fadeUp`, `bgDrift`
+- Sin librerías de UI — estilos propios en `styles.css`
 
-```bash
-# Si tienes múltiples cuentas, usa named profiles
-aws configure --profile free-tier
-# Access Key ID: tu-key
-# Secret Access Key: tu-secret
-# Region: us-east-1
-# Output: json
-
-export AWS_PROFILE=free-tier
-aws sts get-caller-identity  # Verifica que estás en la cuenta correcta
-```
-
----
-
-## Despliegue
-
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/tu-usuario/stylematch.git
-cd stylematch
-
-# 2. Configurar variables
-cp terraform/terraform.tfvars.example terraform/terraform.tfvars
-# Editar terraform.tfvars con tu SerpAPI key
-
-# 3. Desplegar infraestructura
-cd terraform
-terraform init
-terraform plan        # Revisar qué se va a crear
-terraform apply       # Escribir "yes" para confirmar
-
-# 4. Copiar la URL del output
-# api_url = "https://abc123.execute-api.us-east-1.amazonaws.com/prod/analizar"
-```
-
----
-
-## Probar el endpoint
-
-```bash
-# Codificar una imagen a base64
-BASE64=$(base64 -w 0 tu_foto.jpg)  # Linux/Git Bash
-# BASE64=$(base64 -i tu_foto.jpg)  # macOS
-
-# Llamar al API
-curl -X POST \
-  "$(terraform output -raw api_url)" \
-  -H "Content-Type: application/json" \
-  -d "{\"imagen_base64\": \"$BASE64\", \"genero\": \"hombre\"}"
-```
-
----
-
-## Conectar al frontend
-
-Copiar la `api_url` del output de Terraform y usarla en el `fetch()` del HTML:
-
-```javascript
-const API_URL = "https://abc123.execute-api.us-east-1.amazonaws.com/prod/analizar";
-
-const response = await fetch(API_URL, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    imagen_base64: imagenEnBase64,
-    genero: "mujer"
-  })
-});
-
-const data = await response.json();
-// data.prenda.tipo_es → "Vestido"
-// data.tiendas → [{nombre: "Saga Falabella", ...}]
-```
+**Infraestructura**
+- `random_id` para nombres únicos globales en S3 y Lambda
+- `archive_file` para auto-zip del código Lambda con hash de fuente
+- Secretos en `terraform.tfvars` (fuera de git, incluido en `.gitignore`)
 
 ---
 
@@ -120,86 +82,169 @@ const data = await response.json();
 ```
 stylematch/
 ├── terraform/
-│   ├── main.tf            # Provider AWS, random suffix
-│   ├── variables.tf       # Variables configurables
-│   ├── terraform.tfvars   # Valores (NO commitear)
-│   ├── s3.tf              # Bucket de imágenes temporales
-│   ├── iam.tf             # Rol Lambda con mínimo privilegio
-│   ├── lambda.tf          # Función Lambda + empaquetado zip
-│   ├── api_gateway.tf     # REST API + CORS
-│   └── outputs.tf         # URL del API, nombre del bucket
+│   ├── main.tf              # Provider, random_id, default_tags
+│   ├── variables.tf          # aws_region, project_name, serpapi_key, environment
+│   ├── s3.tf                 # Bucket con lifecycle 7 días
+│   ├── iam.tf                # Rol Lambda con least privilege
+│   ├── lambda.tf             # Lambda + archive_file
+│   ├── api_gateway.tf        # REST API con CORS
+│   └── outputs.tf            # api_url, bucket_name, lambda_name
 ├── backend/
-│   ├── lambda_function.py # Lógica principal
-│   └── requirements.txt   # Dependencias (referencia)
-└── README.md
+│   ├── lambda_function.py    # Lógica principal (~500 líneas)
+│   └── requirements.txt
+└── frontend/
+    ├── public/
+    │   ├── index.html        # Google Fonts precargadas
+    │   └── images/           # 8 fotos para el collage
+    └── src/
+        ├── App.jsx           # Toda la app
+        └── styles.css        # Animaciones
+```
+
+---
+
+## Flujo del Lambda
+
+1. Recibe `POST { imagen_base64, genero }` — limpia prefijo `data:image/jpeg;base64,` si viene del frontend
+2. Sube la imagen a S3 en `uploads/{genero}/{uuid}_{timestamp}.jpg`
+3. Llama a `rekognition.detect_labels` (MaxLabels=20, MinConfidence=70)
+4. Extrae prenda, color y estilo de los labels (busca en label directo, nombres compuestos y campo `Parents`)
+5. Construye query para SerpAPI: `{prenda} {color} tienda Lima Peru`
+6. Combina resultados de SerpAPI con fallback de tiendas físicas hardcodeadas
+7. Devuelve JSON con prenda detectada, lista de tiendas (hasta 18), precios, ubicaciones y badges
+
+---
+
+## Ejecución local
+
+### Prerrequisitos
+
+- AWS CLI configurado (`aws configure` o perfil en `~/.aws/credentials`)
+- Terraform >= 1.5
+- Node.js 18+ para el frontend
+- Cuenta en [SerpAPI](https://serpapi.com) (plan free: 250 queries/mes)
+
+### Backend con Terraform
+
+```bash
+git clone https://github.com/AndresRJ18/stylematch.git
+cd stylematch/terraform
+
+# Crear archivo de variables (nunca commitear)
+cat > terraform.tfvars <<EOF
+aws_region    = "us-east-1"
+project_name  = "stylematch"
+environment   = "prod"
+serpapi_key   = "TU_KEY_AQUI"
+EOF
+
+export AWS_PROFILE=tu-perfil
+terraform init
+terraform apply -auto-approve
+```
+
+Al terminar, `terraform output api_url` devuelve el endpoint a pegar en el frontend.
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+
+# Pegar el endpoint en App.jsx (línea con API_URL o la constante del fetch)
+npm start
+```
+
+---
+
+## Deployment
+
+### Backend
+
+El backend se gestiona completamente con Terraform. Para forzar redeploy del Lambda después de cambiar código:
+
+```bash
+# Opción 1 — taint
+terraform taint aws_lambda_function.stylematch
+terraform apply -auto-approve
+
+# Opción 2 — si taint falla con "already managed"
+terraform state rm aws_lambda_function.stylematch
+terraform import aws_lambda_function.stylematch stylematch-analyzer-XXXXXXXX
+terraform apply -auto-approve
+```
+
+### Ver logs en tiempo real
+
+```bash
+# En Git Bash usar MSYS_NO_PATHCONV=1 para evitar que convierta el path
+MSYS_NO_PATHCONV=1 aws logs tail /aws/lambda/stylematch-analyzer-XXXX \
+  --since 5m --format short --profile tu-perfil
+```
+
+### Frontend en Vercel
+
+Conectar el repo de GitHub a Vercel. Deploy automático en cada push a `main`. No requiere configuración adicional — Vercel detecta React y hace el build solo.
+
+---
+
+## Test desde CLI
+
+```bash
+BASE64=$(base64 -w 0 /ruta/a/foto.jpeg)
+echo "{\"imagen_base64\": \"$BASE64\", \"genero\": \"hombre\"}" > /tmp/payload.json
+
+curl -s -X POST "https://{tu-api-id}.execute-api.us-east-1.amazonaws.com/prod/analizar" \
+  -H "Content-Type: application/json" \
+  -d @/tmp/payload.json | python -m json.tool
 ```
 
 ---
 
 ## Costos estimados (Free Tier)
 
-| Servicio      | Gratis hasta              | Costo después         |
-|---------------|---------------------------|-----------------------|
-| Lambda        | 1M requests/mes           | $0.20 por 1M requests |
-| S3            | 5 GB storage              | $0.023/GB             |
-| Rekognition   | 5,000 imágenes/mes        | $1.00 por 1,000       |
-| API Gateway   | 1M llamadas/mes           | $3.50 por 1M          |
-| **Total dev** | **$0.00**                 |                       |
+| Servicio | Límite gratuito |
+|----------|----------------|
+| Lambda | 1 M requests/mes |
+| S3 | 5 GB (lifecycle borra a los 7 días) |
+| Rekognition | 5 000 imágenes/mes (primeros 12 meses) |
+| API Gateway | 1 M calls/mes |
+| SerpAPI | 250 queries/mes (plan free) |
+| Vercel | Gratis para proyectos personales |
 
-Las imágenes se eliminan automáticamente después de 7 días (lifecycle rule en S3).
-
----
-
-## Destruir infraestructura
-
-```bash
-cd terraform
-terraform destroy  # Escribir "yes" para confirmar
-```
-
-Esto elimina TODOS los recursos creados y evita costos futuros.
+**Costo mensual real del proyecto: $0**
 
 ---
 
-## Respuesta de ejemplo
+## Problemas conocidos
 
-```json
-{
-  "success": true,
-  "genero": "hombre",
-  "prenda": {
-    "tipo_es": "Polo / Camiseta",
-    "color": "Negro",
-    "estilo": "Casual",
-    "material_estimado": "Algodón",
-    "confianza": 94.2,
-    "cuando_usar": "Ideal para días relajados, salidas informales o el fin de semana.",
-    "ocasion": ["Día casual", "Fin de semana", "Salida con amigos"],
-    "tallas_disponibles": ["XS", "S", "M", "L", "XL", "XXL"],
-    "precio_min": 25,
-    "precio_max": 120
-  },
-  "tiendas": [
-    {
-      "nombre": "Saga Falabella",
-      "tipo": "fisica",
-      "producto": "Polo básico algodón — Negro",
-      "precio": 89.90,
-      "ubicacion": "Jockey Plaza, San Isidro, Miraflores",
-      "link": "https://www.falabella.com.pe",
-      "disponible": true
-    }
-  ]
-}
-```
+- **Encoding UTF-8**: caracteres como `é`, `ó` pueden aparecer mal codificados en las respuestas JSON del Lambda. Pendiente de fix.
+- **Detección de color**: Rekognition no siempre incluye colores. El Lambda busca en labels directos, nombres compuestos y campo `Parents`. Si no encuentra, el frontend oculta ese campo.
+- **Responsive mobile**: el collage de fotos no se adapta bien en pantallas pequeñas. Pendiente.
+- **SerpAPI**: no soporta `gl=pe`. Se compensa metiendo "Lima Peru" en la query directamente.
 
 ---
 
-## Tecnologías
+## Mejoras planeadas
 
-- **Terraform** — Infrastructure as Code
-- **AWS Lambda** — Serverless compute (Python 3.11)
-- **Amazon Rekognition** — Detección de etiquetas en imágenes
-- **Amazon S3** — Almacenamiento temporal de imágenes
-- **API Gateway** — REST API con CORS
-- **SerpAPI** — Búsqueda de productos en Google Shopping
+- [ ] Fix de encoding UTF-8 en respuestas Lambda
+- [ ] Detección de color por análisis de píxeles dominantes con Pillow
+- [ ] Imágenes de productos de SerpAPI en las tarjetas (campo `thumbnail` ya disponible)
+- [ ] Caché de resultados para ahorrar queries de SerpAPI
+- [ ] Responsive mobile completo
+- [ ] Tests unitarios para el Lambda
+- [ ] CI/CD con GitHub Actions para auto-deploy del backend
+
+---
+
+## Autor
+
+**Andrés Rodas** — Estudiante de Ingeniería Informática en UPCH, enfocado en Cloud Computing e IA.
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Andrés_Rodas-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/andres-rodas-802309272)
+[![GitHub](https://img.shields.io/badge/GitHub-@AndresRJ18-181717?style=flat-square&logo=github)](https://github.com/AndresRJ18)
+[![Email](https://img.shields.io/badge/Email-andrescloud18sj@gmail.com-D14836?style=flat-square&logo=gmail)](mailto:andrescloud18sj@gmail.com)
+
+---
+
+Hecho con cariño por Andres & Chiara · Lima, Perú · 2025
