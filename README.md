@@ -247,4 +247,4 @@ curl -s -X POST "https://{tu-api-id}.execute-api.us-east-1.amazonaws.com/prod/an
 
 ---
 
-Hecho con cariño por Andres & Chiara · Lima, Perú · 2025
+Hecho con cariño por Andres & Chiarita · Lima, Perú · 2026
