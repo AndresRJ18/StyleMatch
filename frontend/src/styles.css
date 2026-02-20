@@ -1,0 +1,8 @@
+@keyframes floatParticle0 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(30px,-40px); } }
+@keyframes floatParticle1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-25px,35px); } }
+@keyframes floatParticle2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(20px,25px); } }
+@keyframes floatFlower { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-25px) rotate(12deg); } }
+@keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bgDrift { 0% { transform: translate(0,0) scale(1); } 33% { transform: translate(-20px,15px) scale(1.02); } 66% { transform: translate(15px,-20px) scale(0.98); } 100% { transform: translate(0,0) scale(1); } }
+@keyframes spin { to { transform: rotate(360deg); } }
