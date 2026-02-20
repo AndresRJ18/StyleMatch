@@ -13,7 +13,7 @@
 
 Sube una foto de tu ropa → AWS Rekognition detecta la prenda → StyleMatch te muestra dónde comprarla en Lima, Perú.
 
-[Ver Presentación](https://andresrj18.github.io/StyleMatch/) · [Arquitectura](#arquitectura) · [Deploy](#deployment)
+[Ver Presentación](https://andresrj18.github.io/StyleMatch) · [Arquitectura](#arquitectura) · [Deploy](#deployment)
 
 <br/>
 
