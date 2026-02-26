@@ -12,6 +12,8 @@
 
 Sube una foto de tu ropa → AWS Rekognition detecta la prenda → StyleMatch te muestra dónde comprarla online.
 
+[![Ver StyleMatch Online](https://img.shields.io/badge/Live%20Demo-acstylematch.vercel.app-000?style=for-the-badge&logo=vercel&logoColor=white)](https://acstylematch.vercel.app/)
+
 [Presentación](https://andresrj18.github.io/StyleMatch/) · [Arquitectura](#arquitectura) · [Deploy](#deployment)
 
 </div>
