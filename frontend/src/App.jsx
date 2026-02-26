@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import './styles.css';
 
 const API_URL = "https://mub2c1l8gb.execute-api.us-east-1.amazonaws.com/prod/analizar";
@@ -69,17 +70,17 @@ function ContactModal({ onClose, theme }) {
         <div style={{ marginBottom: "1.5rem", padding: "1.2rem", border: `1px solid ${border}`, borderRadius: isM ? 14 : 2 }}>
           <h4 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.6rem" }}>Andres Rodas</h4>
           <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
-            <a href={SOCIALS.andres.ig} target="_blank" rel="noopener" style={linkS}><IgIcon size={15} color={accent}/> Instagram</a>
-            <a href={SOCIALS.andres.linkedin} target="_blank" rel="noopener" style={linkS}><LiIcon size={15} color={accent}/> LinkedIn</a>
-            <a href={SOCIALS.andres.github} target="_blank" rel="noopener" style={linkS}><GhIcon size={15} color={accent}/> GitHub</a>
+            <a href={SOCIALS.andres.ig} target="_blank" rel="noopener noreferrer" style={linkS}><IgIcon size={15} color={accent}/> Instagram</a>
+            <a href={SOCIALS.andres.linkedin} target="_blank" rel="noopener noreferrer" style={linkS}><LiIcon size={15} color={accent}/> LinkedIn</a>
+            <a href={SOCIALS.andres.github} target="_blank" rel="noopener noreferrer" style={linkS}><GhIcon size={15} color={accent}/> GitHub</a>
           </div>
         </div>
 
         <div style={{ marginBottom: "2rem", padding: "1.2rem", border: `1px solid ${border}`, borderRadius: isM ? 14 : 2 }}>
           <h4 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.6rem" }}>Chiara Miranda</h4>
           <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
-            <a href={SOCIALS.chiara.ig} target="_blank" rel="noopener" style={linkS}><IgIcon size={15} color={accent}/> Instagram</a>
-            <a href={SOCIALS.chiara.linkedin} target="_blank" rel="noopener" style={linkS}><LiIcon size={15} color={accent}/> LinkedIn</a>
+            <a href={SOCIALS.chiara.ig} target="_blank" rel="noopener noreferrer" style={linkS}><IgIcon size={15} color={accent}/> Instagram</a>
+            <a href={SOCIALS.chiara.linkedin} target="_blank" rel="noopener noreferrer" style={linkS}><LiIcon size={15} color={accent}/> LinkedIn</a>
           </div>
         </div>
 
@@ -95,27 +96,39 @@ function Collage({ genero }) {
   const radius = isM ? 14 : 2;
   const slots = isM
     ? [
-        { w:"48%",h:200,img:"/images/vestido-mujer.jpg",t:0,l:0 },
-        { w:"48%",h:140,img:"/images/casual-mujer.jpg",t:0,l:"52%" },
-        { w:"48%",h:160,img:"/images/elegante-mujer.jpg",t:150,l:"52%" },
-        { w:"48%",h:180,img:"/images/accesorios-mujer.jpg",t:210,l:0 },
+        { w:"55%",h:240,img:"/images/vestido-mujer.jpg",t:0,l:0 },
+        { w:"40%",h:160,img:"/images/casual-mujer.jpg",t:20,l:"60%" },
+        { w:"45%",h:180,img:"/images/elegante-mujer.jpg",t:200,l:"50%" },
+        { w:"45%",h:150,img:"/images/accesorios-mujer.jpg",t:260,l:0 },
       ]
     : [
-        { w:"55%",h:220,img:"/images/street-hombre.jpg",t:0,l:0 },
-        { w:"42%",h:150,img:"/images/formal-hombre.jpg",t:0,l:"58%" },
-        { w:"42%",h:170,img:"/images/casual-hombre.jpg",t:160,l:"58%" },
-        { w:"55%",h:160,img:"/images/sneakers-hombre.jpg",t:230,l:0 },
+        { w:"60%",h:250,img:"/images/street-hombre.jpg",t:0,l:0 },
+        { w:"35%",h:160,img:"/images/formal-hombre.jpg",t:30,l:"65%" },
+        { w:"45%",h:190,img:"/images/casual-hombre.jpg",t:210,l:"55%" },
+        { w:"50%",h:140,img:"/images/sneakers-hombre.jpg",t:270,l:0 },
       ];
 
   return (
-    <div style={{ position: "relative", height: isM ? 400 : 400, width: "100%" }}>
+    <div style={{ position: "relative", height: 450, width: "100%", maxWidth: 500, margin: "0 auto" }}>
       {slots.map((p, i) => (
-        <div key={i} style={{ position: "absolute", width: p.w, height: p.h, top: p.t, left: p.l, border: `1px solid ${border}`, borderRadius: radius, overflow: "hidden" }}>
-          <img src={process.env.PUBLIC_URL + p.img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-        </div>
+        <motion.div 
+          key={i} 
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
+          style={{ position: "absolute", width: p.w, height: p.h, top: p.t, left: p.l, border: `1px solid ${border}`, borderRadius: radius, overflow: "hidden", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}
+        >
+          <motion.img 
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.4 }}
+            src={process.env.PUBLIC_URL + p.img} 
+            alt="Style Inspiration" 
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} 
+          />
+        </motion.div>
       ))}
       {isM && ["✿","❀","✾","❁","✿"].map((f, i) => (
-        <div key={`cf${i}`} style={{ position: "absolute", fontSize: `${16+i*3}px`, right: `${5+i*10}%`, bottom: `${-2+i*6}%`, color: i%2===0?"#E8A0BB":"#D4638F", opacity: 0.18+i*0.03, animation: `floatFlower ${16+i*3}s ease-in-out ${-i*2}s infinite`, pointerEvents: "none" }}>{f}</div>
+        <div key={`cf${i}`} style={{ position: "absolute", fontSize: `${16+i*3}px`, right: `${5+i*10}%`, bottom: `${-2+i*6}%`, color: i%2===0?"#E8A0BB":"#D4638F", opacity: 0.18+i*0.03, animation: `floatFlower ${16+i*3}s ease-in-out ${-i*2}s infinite`, pointerEvents: "none", zIndex: 10 }}>{f}</div>
       ))}
     </div>
   );
@@ -126,11 +139,28 @@ function SocialFooter({ color }) {
   const linkS = { color, opacity: 0.4, transition: "opacity 0.3", display: "inline-flex", alignItems: "center", gap: "0.25rem", textDecoration: "none", fontSize: "0.5rem", fontFamily: "'Courier Prime', monospace", letterSpacing: 1 };
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.7rem", flexWrap: "wrap" }}>
-      <a href={SOCIALS.andres.ig} target="_blank" rel="noopener" style={linkS}><IgIcon size={s} color={color}/></a>
-      <a href={SOCIALS.chiara.ig} target="_blank" rel="noopener" style={linkS}><IgIcon size={s} color={color}/></a>
-      <a href={SOCIALS.andres.linkedin} target="_blank" rel="noopener" style={linkS}><LiIcon size={s} color={color}/></a>
-      <a href={SOCIALS.chiara.linkedin} target="_blank" rel="noopener" style={linkS}><LiIcon size={s} color={color}/></a>
-      <a href={SOCIALS.andres.github} target="_blank" rel="noopener" style={linkS}><GhIcon size={s} color={color}/></a>
+      <a href={SOCIALS.andres.ig} target="_blank" rel="noopener noreferrer" style={linkS}><IgIcon size={s} color={color}/></a>
+      <a href={SOCIALS.chiara.ig} target="_blank" rel="noopener noreferrer" style={linkS}><IgIcon size={s} color={color}/></a>
+      <a href={SOCIALS.andres.linkedin} target="_blank" rel="noopener noreferrer" style={linkS}><LiIcon size={s} color={color}/></a>
+      <a href={SOCIALS.chiara.linkedin} target="_blank" rel="noopener noreferrer" style={linkS}><LiIcon size={s} color={color}/></a>
+      <a href={SOCIALS.andres.github} target="_blank" rel="noopener noreferrer" style={linkS}><GhIcon size={s} color={color}/></a>
+    </div>
+  );
+}
+
+function LoadingSteps({ genero, step }) {
+  const steps=["Subiendo imagen a S3...","Rekognition analizando...","Detectando tipo, color, estilo...","Buscando tiendas en Lima...","Preparando resultados..."];
+  const isM=genero==="mujer"; 
+  const accent=isM?"#D4638F":"#C49E6C"; 
+  const text=isM?"#2D1F2B":"#F0EDE8";
+
+  return (
+    <div style={{ marginTop: "1rem", display: "flex", flexDirection: "column", gap: "0.5rem", padding: "1rem", background: isM ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.05)", borderRadius: isM ? 16 : 4, backdropFilter: "blur(10px)" }}>
+      {steps.map((s, i) => (
+        <div key={i} style={{ fontFamily: "'Montserrat'", fontSize: "0.75rem", fontWeight: 300, color: i === step ? accent : text, opacity: i < step ? 0.3 : i === step ? 1 : 0.15, transition: "all 0.5s", display: "flex", alignItems: "center", gap: "0.7rem" }}>
+          <span style={{ fontSize: "0.6rem" }}>{i < step ? "✓" : i === step ? "◉" : "○"}</span>{s}
+        </div>
+      ))}
     </div>
   );
 }
@@ -139,6 +169,7 @@ function MainPage({ genero, onSwitch, onHome }) {
   const [preview, setPreview] = useState(null);
   const [base64, setBase64] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loadStep, setLoadStep] = useState(0);
   const [result, setResult] = useState(null);
   const [dragOver, setDragOver] = useState(false);
   const [filter, setFilter] = useState("todas");
@@ -158,8 +189,48 @@ function MainPage({ genero, onSwitch, onHome }) {
   const aBg = isM ? "rgba(212,99,143,0.08)" : "rgba(196,158,108,0.1)";
   const aBo = isM ? "rgba(212,99,143,0.15)" : "rgba(196,158,108,0.2)";
 
-  const handleFile = f => { if (!f||!f.type.startsWith("image/")) return; const rd = new FileReader(); rd.onload = e => { setPreview(e.target.result); setBase64(e.target.result.split(",")[1]); }; rd.readAsDataURL(f); };
-  const scan = async () => { if (!base64) return; setLoading(true); try { const res = await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({imagen_base64:base64,genero})}); const data = await res.json(); if (data.success){setResult(data);setTimeout(()=>resultRef.current?.scrollIntoView({behavior:"smooth"}),300);} else alert("Error: "+(data.error||"Fallo")); } catch{alert("Error de conexión");} setLoading(false); };
+  const handleFile = f => { 
+    if (!f||!f.type.startsWith("image/")) return; 
+    const rd = new FileReader(); 
+    rd.onload = e => { 
+      setPreview(e.target.result); 
+      setBase64(e.target.result.split(",")[1]); 
+      setResult(null); // Limpiar resultado previo si sube otra
+    }; 
+    rd.readAsDataURL(f); 
+  };
+
+  const scan = async () => { 
+    if (!base64) return; 
+    setLoading(true); 
+    setLoadStep(0);
+    
+    // Simulador de pasos para UI
+    const stepInterval = setInterval(() => {
+        setLoadStep(prev => (prev < 4 ? prev + 1 : prev));
+    }, 1200);
+
+    try { 
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ imagen_base64: base64, genero })
+      }); 
+      const data = await res.json(); 
+      if (data.success) {
+        setResult(data);
+        setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth" }), 300);
+      } else {
+        alert("Error: " + (data.error || "Fallo al procesar imagen")); 
+      }
+    } catch {
+      alert("Error de conexión con AWS");
+    } 
+    
+    clearInterval(stepInterval);
+    setLoading(false); 
+  };
+
   const reset = () => { setPreview(null); setBase64(null); setResult(null); setFilter("todas"); if(fileRef.current)fileRef.current.value=""; window.scrollTo({top:0,behavior:"smooth"}); };
 
   const btnS = { fontFamily:"'Montserrat'",fontSize:"0.65rem",fontWeight:600,letterSpacing:2,textTransform:"uppercase",padding:"0.5rem 1.2rem",border:`1px solid ${cBorder}`,background:"transparent",color:muted,cursor:"pointer",borderRadius:isM?50:2,transition:"all 0.3s" };
@@ -168,21 +239,6 @@ function MainPage({ genero, onSwitch, onHome }) {
     <div style={{ minHeight:"100vh", background:bg, color:text, fontFamily:"'Montserrat', sans-serif", position:"relative" }}>
       {/* Dynamic BG */}
       <div style={{ position:"fixed",inset:0,pointerEvents:"none",zIndex:0, background:isM?"radial-gradient(circle at 20% 25%,rgba(212,99,143,0.1) 0%,transparent 40%),radial-gradient(circle at 80% 55%,rgba(255,182,210,0.12) 0%,transparent 45%),radial-gradient(circle at 45% 85%,rgba(212,99,143,0.07) 0%,transparent 40%)":"radial-gradient(ellipse at 15% 20%,rgba(196,158,108,0.06) 0%,transparent 50%),radial-gradient(ellipse at 85% 75%,rgba(196,158,108,0.04) 0%,transparent 50%)", animation:"bgDrift 25s ease-in-out infinite" }}/>
-
-      {/* Decorations */}
-      {isM?(
-        <div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:0,overflow:"hidden"}}>
-          {["✿","❀","✾","❁","✿","❀","✾","❁","✿","❀","✾","❁","✿","❀","❁","✿","✾","❀"].map((f,i)=>(
-            <div key={i} style={{ position:"absolute",fontSize:`${14+(i%5)*5}px`,left:`${3+(i*5.3)%94}%`,top:`${3+(i*7.1)%94}%`,opacity:0.12+(i%4)*0.04,color:i%3===0?"#F0A6C2":i%3===1?"#D4638F":"#E8A0BB",animation:`floatFlower ${16+i*1.5}s ease-in-out ${-i*2.5}s infinite`,transform:`rotate(${i*43}deg)` }}>{f}</div>
-          ))}
-        </div>
-      ):(
-        <div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:0,overflow:"hidden"}}>
-          {Array.from({length:18},(_,i)=>(
-            <div key={i} style={{ position:"absolute",width:3+(i%4)*2,height:3+(i%4)*2,borderRadius:"50%",background:"rgba(196,158,108,0.5)",left:`${3+(i*5.6)%94}%`,top:`${3+(i*6.3)%94}%`,opacity:0.18+(i%3)*0.08,animation:`floatParticle${i%3} ${14+i*1.5}s ease-in-out ${-i*2}s infinite` }}/>
-          ))}
-        </div>
-      )}
 
       {/* Header */}
       <header style={{ position:"sticky",top:0,zIndex:50,display:"flex",alignItems:"center",justifyContent:"space-between",padding:"1rem 2.5rem",background:glass,backdropFilter:"blur(20px)",borderBottom:`1px solid ${cBorder}` }}>
@@ -194,27 +250,72 @@ function MainPage({ genero, onSwitch, onHome }) {
         </div>
       </header>
 
-      {/* Hero */}
-      <section style={{position:"relative",zIndex:1,maxWidth:1100,margin:"0 auto",padding:"3.5rem 2rem 1rem"}}>
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"3rem",alignItems:"start"}}>
-          <div>
+      {/* Hero Section - Asymmetrical Design */}
+      <section style={{position:"relative",zIndex:1,maxWidth:1200,margin:"0 auto",padding:"4rem 2rem 2rem"}}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "4rem", alignItems: "center" }}>
+          
+          {/* Left Side: Typography & Upload (Larger ratio) */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 0.8 }}
+            style={{ flex: "1.2 1 450px" }}
+          >
             <p style={{fontFamily:"'Courier Prime', monospace",fontSize:"0.65rem",letterSpacing:4,textTransform:"uppercase",color:accent,marginBottom:"1.2rem"}}>Fashion Finder · Lima</p>
-            <h1 style={{ fontFamily:"'Cormorant Garamond', serif",fontSize:"clamp(2.2rem,4.5vw,3.8rem)",fontWeight:700,fontStyle:isM?"italic":"normal",lineHeight:1.05,marginBottom:"1.2rem",letterSpacing:isM?1:3,whiteSpace:"pre-line" }}>{isM?"DESCUBRE\nTU LOOK":"IDENTIFICA\nTU ESTILO"}</h1>
-            <p style={{fontWeight:200,fontSize:"0.95rem",lineHeight:1.7,color:muted,marginBottom:"2rem",maxWidth:400}}>{isM?"Sube una foto y descubre cada detalle de tu outfit.":"Sube una foto. Nuestra IA detecta tipo, color y estilo."}</p>
+            <h1 style={{ fontFamily:"'Cormorant Garamond', serif",fontSize:"clamp(3rem,6vw,5rem)",fontWeight:700,fontStyle:isM?"italic":"normal",lineHeight:1,marginBottom:"1.5rem",letterSpacing:isM?1:3,whiteSpace:"pre-line" }}>{isM?"DESCUBRE\nTU LOOK":"IDENTIFICA\nTU ESTILO"}</h1>
+            <p style={{fontWeight:200,fontSize:"1rem",lineHeight:1.7,color:muted,marginBottom:"2.5rem",maxWidth:450}}>{isM?"Sube una foto y deja que nuestra IA descubra cada detalle de tu outfit.":"Sube una foto. Nuestra IA detecta tipo, color, material y estilo."}</p>
 
-            <div onClick={()=>fileRef.current?.click()} onDragOver={e=>{e.preventDefault();setDragOver(true)}} onDragLeave={()=>setDragOver(false)} onDrop={e=>{e.preventDefault();setDragOver(false);handleFile(e.dataTransfer.files[0])}}
-              style={{ border:`2px ${preview?"solid":"dashed"} ${dragOver?accent:cBorder}`,borderRadius:r,padding:preview?"1rem":"3rem 2rem",textAlign:"center",cursor:"pointer",transition:"all 0.4s ease",background:dragOver?`${accent}08`:isM?"rgba(255,255,255,0.5)":"rgba(255,255,255,0.02)",position:"relative",overflow:"hidden" }}>
-              {isM&&!preview&&<div style={{position:"absolute",top:-2,left:-2,right:-2,height:3,background:`linear-gradient(90deg,${accent},#F8D0DE,${accent})`,backgroundSize:"200% 100%",animation:"shimmer 3s ease-in-out infinite",borderRadius:`${r}px ${r}px 0 0`}}/>}
-              {preview?<img src={preview} alt="Preview" style={{width:"100%",maxHeight:350,objectFit:"contain",borderRadius:Math.max(r-4,0)}}/>:(
-                <><div style={{fontSize:"2.5rem",marginBottom:"0.8rem",opacity:0.3}}>{isM?"✨":"📷"}</div><p style={{fontSize:"0.9rem",fontWeight:300,marginBottom:"0.4rem"}}>Arrastra tu foto aquí</p><p style={{fontFamily:"'Courier Prime', monospace",fontSize:"0.7rem",opacity:0.35}}>JPG, PNG</p></>
+            {/* Glassmorphism Upload Zone */}
+            <div onClick={()=> !loading && fileRef.current?.click()} onDragOver={e=>{e.preventDefault();setDragOver(true)}} onDragLeave={()=>setDragOver(false)} onDrop={e=>{e.preventDefault();setDragOver(false); !loading && handleFile(e.dataTransfer.files[0])}}
+              style={{ 
+                border: `2px ${preview?"solid":"dashed"} ${dragOver?accent:cBorder}`,
+                borderRadius: r,
+                padding: preview ? "1rem" : "4rem 2rem",
+                textAlign: "center",
+                cursor: loading ? "wait" : "pointer",
+                transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                background: dragOver ? `${accent}15` : isM ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.03)",
+                backdropFilter: "blur(12px)",
+                boxShadow: dragOver ? `0 0 30px ${accent}20` : "0 8px 32px 0 rgba(0,0,0,0.05)",
+                position: "relative",
+                overflow: "hidden" 
+              }}>
+              
+              {isM && !preview && <div style={{position:"absolute",top:-2,left:-2,right:-2,height:3,background:`linear-gradient(90deg,${accent},#F8D0DE,${accent})`,backgroundSize:"200% 100%",animation:"shimmer 3s ease-in-out infinite",borderRadius:`${r}px ${r}px 0 0`}}/>}
+              
+              {preview ? (
+                <div className={loading ? "scanner-container" : ""} style={{ position: "relative", width: "100%", color: accent }}>
+                  <img src={preview} alt="Preview" style={{width:"100%",maxHeight:380,objectFit:"contain",borderRadius:Math.max(r-4,0), opacity: loading ? 0.6 : 1, transition: "opacity 0.3s"}}/>
+                  {/* Escáner IA activado durante el loading */}
+                  {loading && <div className="scanner-line" />}
+                </div>
+              ) : (
+                <motion.div whileHover={{ scale: 1.02 }}>
+                  <div style={{fontSize:"3rem",marginBottom:"1rem",opacity:0.4}}>{isM?"✨":"📷"}</div>
+                  <p style={{fontSize:"1.1rem",fontWeight:400,marginBottom:"0.5rem"}}>Arrastra tu foto aquí</p>
+                  <p style={{fontFamily:"'Courier Prime', monospace",fontSize:"0.75rem",opacity:0.4}}>JPG, PNG</p>
+                </motion.div>
               )}
-              <input ref={fileRef} type="file" accept="image/*" style={{display:"none"}} onChange={e=>handleFile(e.target.files[0])}/>
+              <input ref={fileRef} type="file" accept="image/*" style={{display:"none"}} onChange={e=>handleFile(e.target.files[0])} disabled={loading}/>
             </div>
 
-            {preview&&<button onClick={scan} style={{ width:"100%",padding:"1.1rem",marginTop:"1.2rem",fontFamily:"'Montserrat'",fontSize:"0.75rem",fontWeight:600,letterSpacing:3,textTransform:"uppercase",border:"none",background:accent,color:isM?"#fff":"#0D0D0D",borderRadius:isM?50:2,cursor:"pointer",animation:"fadeUp 0.5s ease" }}>{isM?"✨ Escanear Prenda":"⚡ Escanear Prenda"}</button>}
-          </div>
+            {preview && !loading && !result && (
+              <motion.button 
+                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                onClick={scan} 
+                style={{ width:"100%",padding:"1.2rem",marginTop:"1.5rem",fontFamily:"'Montserrat'",fontSize:"0.8rem",fontWeight:600,letterSpacing:3,textTransform:"uppercase",border:"none",background:accent,color:isM?"#fff":"#0D0D0D",borderRadius:isM?50:2,cursor:"pointer",boxShadow:`0 10px 25px ${accent}40` }}
+              >
+                {isM?"✨ Escanear Prenda":"⚡ Analizar Look"}
+              </motion.button>
+            )}
 
-          <div>
+            {/* Inline Loading Steps (Reemplaza el Overlay bloqueante) */}
+            {loading && <LoadingSteps genero={genero} step={loadStep} />}
+
+          </motion.div>
+
+          {/* Right Side: Dynamic Collage (Smaller ratio) */}
+          <div style={{ flex: "0.8 1 350px", position: "relative" }}>
             <Collage genero={genero}/>
             <RotatingPhrase phrases={isM?FRASES_MUJER:FRASES_HOMBRE} accentColor={accent}/>
           </div>
@@ -226,14 +327,14 @@ function MainPage({ genero, onSwitch, onHome }) {
         {result&&(()=>{
           const p=result.prenda; const tiendas=(result.tiendas||[]).filter(t=>filter==="todas"||t.tipo===filter);
           return (
-            <div style={{maxWidth:1100,margin:"0 auto",padding:"2rem 2rem 3rem",animation:"fadeUp 0.8s ease",position:"relative",zIndex:1}}>
+            <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} style={{maxWidth:1100,margin:"0 auto",padding:"2rem 2rem 3rem",position:"relative",zIndex:1}}>
               <div style={{display:"flex",gap:"2.5rem",alignItems:"flex-start",marginBottom:"3rem",flexWrap:"wrap"}}>
-                <div style={{flexShrink:0,width:260,height:330,overflow:"hidden",border:`1px solid ${cBorder}`,borderRadius:r}}><img src={preview} alt="Prenda" style={{width:"100%",height:"100%",objectFit:"cover"}}/></div>
+                <div style={{flexShrink:0,width:260,height:330,overflow:"hidden",border:`1px solid ${cBorder}`,borderRadius:r, boxShadow: "0 10px 30px rgba(0,0,0,0.08)"}}><img src={preview} alt="Prenda" style={{width:"100%",height:"100%",objectFit:"cover"}}/></div>
                 <div style={{flex:1,minWidth:280}}>
-                  <p style={{fontFamily:"'Courier Prime', monospace",fontSize:"0.65rem",letterSpacing:3,textTransform:"uppercase",color:accent,marginBottom:"0.8rem"}}>Resultado</p>
+                  <p style={{fontFamily:"'Courier Prime', monospace",fontSize:"0.65rem",letterSpacing:3,textTransform:"uppercase",color:accent,marginBottom:"0.8rem"}}>Resultado IA</p>
                   <h2 style={{fontFamily:"'Cormorant Garamond', serif",fontSize:"clamp(2rem,4vw,3.2rem)",fontWeight:700,fontStyle:isM?"italic":"normal",lineHeight:1.1,marginBottom:"0.5rem"}}>{p.tipo_es} {p.color!=="No detectado"?p.color:""}</h2>
-                  <p style={{fontFamily:"'Courier Prime', monospace",fontSize:"0.75rem",opacity:0.5,marginBottom:"0.8rem"}}>{p.confianza}% · {p.estilo}</p>
-                  <div style={{fontFamily:"'Cormorant Garamond', serif",fontSize:"1.8rem",fontWeight:700,color:accent,marginBottom:"1.2rem"}}>S/ {p.precio_min} — {p.precio_max} <span style={{fontFamily:"'Courier Prime', monospace",fontSize:"0.65rem",fontWeight:400,opacity:0.5}}>rango en Lima</span></div>
+                  <p style={{fontFamily:"'Courier Prime', monospace",fontSize:"0.75rem",opacity:0.5,marginBottom:"0.8rem"}}>Confianza: {p.confianza}% · {p.estilo}</p>
+                  <div style={{fontFamily:"'Cormorant Garamond', serif",fontSize:"1.8rem",fontWeight:700,color:accent,marginBottom:"1.2rem"}}>S/ {p.precio_min} — {p.precio_max} <span style={{fontFamily:"'Courier Prime', monospace",fontSize:"0.65rem",fontWeight:400,opacity:0.5}}>rango estimado en Lima</span></div>
                   <div style={{display:"flex",flexWrap:"wrap",gap:"0.4rem"}}>
                     {(p.etiquetas||[]).slice(0,8).map((e,i)=>(<span key={i} style={{fontFamily:"'Courier Prime'",fontSize:"0.65rem",padding:"0.35rem 0.7rem",background:aBg,border:`1px solid ${aBo}`,color:accent,borderRadius:isM?50:2}}>{e.nombre} {e.confianza}%</span>))}
                   </div>
@@ -241,7 +342,7 @@ function MainPage({ genero, onSwitch, onHome }) {
               </div>
               <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(170px, 1fr))",gap:"1rem",marginBottom:"3rem"}}>
                 {[{l:"Prenda",v:p.tipo_es},{l:"Color",v:p.color},{l:"Material",v:p.material_estimado},{l:"Tallas",v:(p.tallas_disponibles||[]).join(" · "),s:"Estimado"},{l:"Estilo",v:p.estilo}].filter(d=>d.v&&d.v!=="No detectado").map((d,i)=>(
-                  <div key={i} style={{padding:"1.6rem",background:cBg,border:`1px solid ${cBorder}`,borderRadius:r}}>
+                  <div key={i} style={{padding:"1.6rem",background:cBg,border:`1px solid ${cBorder}`,borderRadius:r, backdropFilter: "blur(10px)"}}>
                     <div style={{fontFamily:"'Courier Prime', monospace",fontSize:"0.6rem",letterSpacing:2,textTransform:"uppercase",color:accent,marginBottom:"0.7rem"}}>{d.l}</div>
                     <div style={{fontFamily:"'Cormorant Garamond', serif",fontSize:"1.3rem",fontWeight:700}}>{d.v}</div>
                     {d.s&&<div style={{fontSize:"0.75rem",fontWeight:300,opacity:0.4,marginTop:"0.3rem"}}>{d.s}</div>}
@@ -250,53 +351,40 @@ function MainPage({ genero, onSwitch, onHome }) {
               </div>
               <h3 style={{fontFamily:"'Cormorant Garamond', serif",fontSize:"1.5rem",fontWeight:700,fontStyle:isM?"italic":"normal",marginBottom:"1rem"}}>Cuándo usarlo</h3>
               <div style={{display:"flex",flexWrap:"wrap",gap:"0.5rem",marginBottom:"3rem"}}>{(p.ocasion||[]).map((o,i)=>(<span key={i} style={{fontSize:"0.8rem",padding:"0.5rem 1.2rem",border:`1px solid ${cBorder}`,borderRadius:isM?50:2,color:accent}}>{o}</span>))}</div>
+              
               <h3 style={{fontFamily:"'Cormorant Garamond', serif",fontSize:"1.5rem",fontWeight:700,fontStyle:isM?"italic":"normal",marginBottom:"1rem"}}>{isM?"Dónde encontrarlo":"Dónde comprarlo"} en Lima</h3>
               <div style={{display:"flex",gap:"0.4rem",marginBottom:"1.5rem"}}>
-                {["todas","fisica","online"].map(f=>(<button key={f} onClick={()=>setFilter(f)} style={{fontFamily:"'Montserrat'",fontSize:"0.7rem",fontWeight:600,letterSpacing:1,textTransform:"uppercase",padding:"0.5rem 1.3rem",border:`1px solid ${filter===f?accent:cBorder}`,background:filter===f?accent:"transparent",color:filter===f?(isM?"#fff":"#0D0D0D"):accent,borderRadius:isM?50:2,cursor:"pointer"}}>{f==="todas"?"Todas":f==="fisica"?"📍 Físicas":"🌐 Online"}</button>))}
+                {["todas","fisica","online"].map(f=>(<button key={f} onClick={()=>setFilter(f)} style={{fontFamily:"'Montserrat'",fontSize:"0.7rem",fontWeight:600,letterSpacing:1,textTransform:"uppercase",padding:"0.5rem 1.3rem",border:`1px solid ${filter===f?accent:cBorder}`,background:filter===f?accent:"transparent",color:filter===f?(isM?"#fff":"#0D0D0D"):accent,borderRadius:isM?50:2,cursor:"pointer", transition: "all 0.3s"}}>{f==="todas"?"Todas":f==="fisica"?"📍 Físicas":"🌐 Online"}</button>))}
               </div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(270px, 1fr))",gap:"1rem"}}>
-                {tiendas.map((t,i)=>(
-                  <div key={i} style={{padding:"1.5rem",background:cBg,border:`1px solid ${cBorder}`,borderRadius:r}}>
-                    <span style={{fontFamily:"'Courier Prime'",fontSize:"0.6rem",padding:"0.2rem 0.5rem",background:aBg,color:accent,borderRadius:isM?50:2}}>{t.tipo==="fisica"?"📍 Física":"🌐 Online"}</span>
-                    <h4 style={{fontFamily:"'Cormorant Garamond'",fontSize:"1.15rem",fontWeight:700,marginTop:"0.7rem"}}>{t.nombre}</h4>
-                    <p style={{fontSize:"0.8rem",fontWeight:300,opacity:0.6,margin:"0.3rem 0 0.7rem",lineHeight:1.4}}>{t.producto}</p>
-                    <div style={{fontFamily:"'Cormorant Garamond'",fontSize:"1.3rem",fontWeight:700,color:accent,marginBottom:"0.4rem"}}>{t.precio>0?`S/ ${t.precio.toFixed(2)}`:"Consultar"}</div>
-                    <p style={{fontSize:"0.73rem",opacity:0.5,marginBottom:"0.2rem"}}>📍 {t.ubicacion||"Lima"}</p>
-                    <p style={{fontFamily:"'Courier Prime'",fontSize:"0.63rem",opacity:0.4,marginBottom:"0.9rem"}}>Tallas: {(t.tallas||[]).join(" · ")}</p>
-                    <a href={t.link} target="_blank" rel="noopener" style={{fontSize:"0.7rem",fontWeight:600,letterSpacing:2,textTransform:"uppercase",color:accent,textDecoration:"none"}}>Ver en tienda →</a>
-                  </div>
-                ))}
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(270px, 1fr))",gap:"1.2rem"}}>
+                <AnimatePresence>
+                  {tiendas.map((t,i)=>(
+                    <motion.div layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} key={i} style={{padding:"1.5rem",background:cBg,border:`1px solid ${cBorder}`,borderRadius:r, backdropFilter: "blur(5px)"}}>
+                      <span style={{fontFamily:"'Courier Prime'",fontSize:"0.6rem",padding:"0.2rem 0.5rem",background:aBg,color:accent,borderRadius:isM?50:2}}>{t.tipo==="fisica"?"📍 Física":"🌐 Online"}</span>
+                      <h4 style={{fontFamily:"'Cormorant Garamond'",fontSize:"1.15rem",fontWeight:700,marginTop:"0.7rem"}}>{t.nombre}</h4>
+                      <p style={{fontSize:"0.8rem",fontWeight:300,opacity:0.6,margin:"0.3rem 0 0.7rem",lineHeight:1.4}}>{t.producto}</p>
+                      <div style={{fontFamily:"'Cormorant Garamond'",fontSize:"1.3rem",fontWeight:700,color:accent,marginBottom:"0.4rem"}}>{t.precio>0?`S/ ${t.precio.toFixed(2)}`:"Consultar"}</div>
+                      <p style={{fontSize:"0.73rem",opacity:0.5,marginBottom:"0.2rem"}}>📍 {t.ubicacion||"Lima"}</p>
+                      <p style={{fontFamily:"'Courier Prime'",fontSize:"0.63rem",opacity:0.4,marginBottom:"0.9rem"}}>Tallas: {(t.tallas||[]).join(" · ")}</p>
+                      <a href={t.link} target="_blank" rel="noopener noreferrer" style={{fontSize:"0.7rem",fontWeight:600,letterSpacing:2,textTransform:"uppercase",color:accent,textDecoration:"none"}}>Ver en tienda →</a>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               </div>
-            </div>
+            </motion.div>
           );
         })()}
       </div>
 
-      {result&&<div style={{textAlign:"center",padding:"2rem 0 1rem",position:"relative",zIndex:1}}><button onClick={reset} style={{fontFamily:"'Montserrat'",fontSize:"0.8rem",fontWeight:600,letterSpacing:3,textTransform:"uppercase",padding:"1.1rem 3rem",border:"none",background:accent,color:isM?"#fff":"#0D0D0D",cursor:"pointer",borderRadius:isM?50:2,boxShadow:isM?"0 4px 20px rgba(212,99,143,0.3)":"0 4px 20px rgba(196,158,108,0.3)",transition:"all 0.3s ease"}}>↻ Nueva búsqueda</button></div>}
+      {result&&<div style={{textAlign:"center",padding:"2rem 0 3rem",position:"relative",zIndex:1}}><button onClick={reset} style={{fontFamily:"'Montserrat'",fontSize:"0.8rem",fontWeight:600,letterSpacing:3,textTransform:"uppercase",padding:"1.1rem 3rem",border:"none",background:accent,color:isM?"#fff":"#0D0D0D",cursor:"pointer",borderRadius:isM?50:2,boxShadow:isM?"0 4px 20px rgba(212,99,143,0.3)":"0 4px 20px rgba(196,158,108,0.3)",transition:"all 0.3s ease"}}>↻ Nueva búsqueda</button></div>}
 
       {/* Footer */}
-      <div style={{position:"relative",zIndex:1,textAlign:"center",padding:"1.5rem 2rem 1rem"}}>
+      <div style={{position:"relative",zIndex:1,textAlign:"center",padding:"1.5rem 2rem 1rem", borderTop: `1px solid ${cBorder}`}}>
         <p style={{fontFamily:"'Courier Prime', monospace",fontSize:"0.6rem",letterSpacing:2,opacity:0.3,color:muted,marginBottom:"0.8rem"}}>Hecho por Andres & Chiara · Powered by AWS</p>
         <SocialFooter color={muted}/>
       </div>
 
       {showContact&&<ContactModal onClose={()=>setShowContact(false)} theme={genero}/>}
-      {loading&&<LoadingOverlay genero={genero}/>}
-    </div>
-  );
-}
-
-function LoadingOverlay({ genero }) {
-  const [step,setStep]=useState(0);
-  const steps=["Subiendo imagen a S3...","Rekognition analizando...","Detectando tipo, color, estilo...","Buscando tiendas en Lima...","Preparando resultados..."];
-  const isM=genero==="mujer"; const accent=isM?"#D4638F":"#C49E6C"; const text=isM?"#2D1F2B":"#F0EDE8";
-  useEffect(()=>{let i=0;const iv=setInterval(()=>{i++;if(i<steps.length)setStep(i);else clearInterval(iv);},900);return()=>clearInterval(iv);},[]);
-  return (
-    <div style={{position:"fixed",inset:0,zIndex:500,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",background:isM?"rgba(255,240,245,0.96)":"rgba(13,13,13,0.96)",backdropFilter:"blur(30px)"}}>
-      <div style={{width:50,height:50,border:"2px solid transparent",borderTopColor:accent,borderRightColor:`${accent}40`,borderRadius:"50%",animation:"spin 1s linear infinite",marginBottom:"2.5rem"}}/>
-      <div style={{display:"flex",flexDirection:"column",gap:"0.8rem"}}>
-        {steps.map((s,i)=>(<div key={i} style={{fontFamily:"'Montserrat'",fontSize:"0.85rem",fontWeight:300,color:i===step?accent:text,opacity:i<step?0.3:i===step?1:0.15,transition:"all 0.5s",display:"flex",alignItems:"center",gap:"0.7rem"}}><span style={{fontSize:"0.6rem"}}>{i<step?"✓":i===step?"◉":"○"}</span>{s}</div>))}
-      </div>
     </div>
   );
 }
@@ -305,8 +393,6 @@ function Landing({ onEnter }) {
   const [hover,setHover]=useState(null);
   return (
     <div style={{position:"fixed",inset:0,display:"flex",flexDirection:"column",zIndex:100,fontFamily:"'Montserrat', sans-serif"}}>
-      {/* Animations loaded from styles.css */}
-
       <div style={{width:"100%",textAlign:"center",padding:"1.3rem 0",background:"#0D0D0D",borderBottom:"1px solid rgba(255,255,255,0.06)",zIndex:101}}>
         <span style={{fontFamily:"'Cormorant Garamond', serif",fontSize:"1.5rem",fontWeight:300,color:"rgba(240,237,232,0.85)",letterSpacing:8,textTransform:"uppercase"}}>Style<span style={{fontWeight:700,color:"#C49E6C"}}>Match</span></span>
       </div>

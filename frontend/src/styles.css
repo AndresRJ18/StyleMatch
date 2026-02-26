@@ -6,3 +6,28 @@
 @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes bgDrift { 0% { transform: translate(0,0) scale(1); } 33% { transform: translate(-20px,15px) scale(1.02); } 66% { transform: translate(15px,-20px) scale(0.98); } 100% { transform: translate(0,0) scale(1); } }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* NUEVO: Efecto Escáner IA */
+@keyframes scanLaser {
+  0% { top: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.scanner-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.scanner-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: currentColor;
+  box-shadow: 0 0 15px currentColor, 0 0 30px currentColor;
+  animation: scanLaser 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  z-index: 10;
+}
