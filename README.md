@@ -12,7 +12,7 @@
 
 Sube una foto de tu ropa → AWS Rekognition detecta la prenda → StyleMatch te muestra dónde comprarla online.
 
-[🌐 Presentación](https://andresrj18.github.io/StyleMatch/) · [Arquitectura](#arquitectura) · [Deploy](#deployment)
+[Presentación](https://andresrj18.github.io/StyleMatch/) · [Arquitectura](#arquitectura) · [Deploy](#deployment)
 
 </div>
 
