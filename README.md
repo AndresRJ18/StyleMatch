@@ -12,7 +12,7 @@
 
 Sube una foto de tu ropa → AWS Rekognition detecta la prenda → StyleMatch te muestra dónde comprarla online.
 
-<a href="#arquitectura">Arquitectura</a> · <a href="#deployment">Deploy</a> · <a href="#costos">Costos</a>
+[Presentación](https://andresrj18.github.io/StyleMatch/) · [Arquitectura](#arquitectura) · [Deploy](#deployment)
 
 </div>
 
@@ -214,7 +214,7 @@ curl -s -X POST "https://TU-API-ID.execute-api.us-east-1.amazonaws.com/prod/anal
 | S3 | 5 GB (lifecycle borra a los 7 días) |
 | Rekognition | 5 000 imágenes/mes (primeros 12 meses) |
 | API Gateway | 1 M calls/mes |
-| SerpAPI | 100 queries/mes (plan free) |
+| SerpAPI | 250 queries/mes (plan free) |
 
 **Costo mensual real del proyecto: $0**
 
@@ -247,10 +247,6 @@ curl -s -X POST "https://TU-API-ID.execute-api.us-east-1.amazonaws.com/prod/anal
 [![GitHub](https://img.shields.io/badge/GitHub-@AndresRJ18-181717?style=flat-square&logo=github)](https://github.com/AndresRJ18)
 [![Email](https://img.shields.io/badge/Email-andrescloud18sj@gmail.com-D14836?style=flat-square&logo=gmail)](mailto:andrescloud18sj@gmail.com)
 
-**Chiara Miranda**
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Chiara_Miranda-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/chiara-miranda-50007139b)
-[![Instagram](https://img.shields.io/badge/Instagram-@sunghoon__uvita-E4405F?style=flat-square&logo=instagram)](https://www.instagram.com/sunghoon_uvita/)
 
 ---
 
