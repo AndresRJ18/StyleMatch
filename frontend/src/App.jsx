@@ -26,14 +26,14 @@ const FRASES_MUJER = [
 ];
 
 const EJEMPLOS_HOMBRE = [
-  { label: "Streetwear", emoji: "🧥" },
-  { label: "Formal",     emoji: "👔" },
-  { label: "Casual",     emoji: "👕" },
+  { label: "Streetwear" },
+  { label: "Formal" },
+  { label: "Casual" },
 ];
 const EJEMPLOS_MUJER = [
-  { label: "Vestido",  emoji: "👗" },
-  { label: "Casual",   emoji: "👚" },
-  { label: "Elegante", emoji: "✨" },
+  { label: "Vestido" },
+  { label: "Casual" },
+  { label: "Elegante" },
 ];
 
 const IgIcon = ({ size = 14, color = "currentColor" }) => (
@@ -109,17 +109,17 @@ function RotatingPhrase({ phrases, accentColor }) {
 
 function ContactModal({ onClose, theme }) {
   const isM    = theme === "mujer";
-  const bg     = isM ? "#FFF0F5" : "#0D0D0D";
-  const text   = isM ? "#2D1F2B" : "#F0EDE8";
-  const accent = isM ? "#D4638F" : "#C49E6C";
-  const border = isM ? "#F0C6D4" : "rgba(255,255,255,0.1)";
+  const bg     = isM ? "#FAF8F4"                : "#1C1410";
+  const text   = isM ? "#0D0A06"                : "#F5EFE8";
+  const accent = isM ? "#C49E6C"                : "#C8A050";
+  const border = isM ? "rgba(196,158,108,0.25)" : "rgba(200,160,80,0.18)";
   const radius = isM ? 20 : 4;
   const linkS  = { display: "flex", alignItems: "center", gap: "0.3rem", color: accent, textDecoration: "none", fontSize: "0.75rem" };
   return (
     <div onClick={onClose} style={{ position: "fixed", inset: 0, zIndex: 600, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(12px)" }}>
       <div onClick={e => e.stopPropagation()} style={{ background: bg, color: text, padding: "2.5rem", borderRadius: radius, border: `1px solid ${border}`, maxWidth: 420, width: "90%", animation: "fadeUp 0.4s ease" }}>
         <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.6rem", fontWeight: 700, fontStyle: isM ? "italic" : "normal", marginBottom: "0.5rem", textAlign: "center" }}>Contacto</h3>
-        <p style={{ fontSize: "0.8rem", fontWeight: 300, opacity: 0.5, textAlign: "center", marginBottom: "2rem" }}>Creadores de StyleMatch</p>
+        <p style={{ fontSize: "0.8rem", fontWeight: 300, opacity: 0.5, textAlign: "center", marginBottom: "2rem" }}>Creadores de ACstyles</p>
         <div style={{ marginBottom: "1.5rem", padding: "1.2rem", border: `1px solid ${border}`, borderRadius: isM ? 14 : 2 }}>
           <h4 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.1rem", fontWeight: 700, marginBottom: "0.6rem" }}>Andres Rodas</h4>
           <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" }}>
@@ -135,7 +135,7 @@ function ContactModal({ onClose, theme }) {
             <a href={SOCIALS.chiara.linkedin}   target="_blank" rel="noopener noreferrer" style={linkS}><LiIcon size={15} color={accent}/> LinkedIn</a>
           </div>
         </div>
-        <button onClick={onClose} style={{ width: "100%", padding: "0.8rem", fontFamily: "'Montserrat'", fontSize: "0.7rem", fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", background: accent, color: isM ? "#fff" : "#0D0D0D", border: "none", borderRadius: isM ? 50 : 2, cursor: "pointer" }}>Cerrar</button>
+        <button onClick={onClose} style={{ width: "100%", padding: "0.8rem", fontFamily: "'Raleway'", fontSize: "0.7rem", fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", background: accent, color: isM ? "#0D0A06" : "#0D0D0D", border: "none", borderRadius: isM ? 50 : 2, cursor: "pointer" }}>Cerrar</button>
       </div>
     </div>
   );
@@ -143,7 +143,7 @@ function ContactModal({ onClose, theme }) {
 
 function Collage({ genero }) {
   const isM    = genero === "mujer";
-  const border = isM ? "#F0C6D4" : "rgba(255,255,255,0.1)";
+  const border = isM ? "rgba(196,158,108,0.30)" : "rgba(200,160,80,0.18)";
   const radius = isM ? 14 : 2;
   const slots  = isM
     ? [
@@ -165,8 +165,8 @@ function Collage({ genero }) {
           <img src={process.env.PUBLIC_URL + p.img} alt="Style" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.4s ease" }} onMouseEnter={e => e.target.style.transform="scale(1.05)"} onMouseLeave={e => e.target.style.transform="scale(1)"}/>
         </div>
       ))}
-      {isM && ["✿","❀","✾","❁","✿"].map((f, i) => (
-        <div key={`cf${i}`} style={{ position: "absolute", fontSize: `${16+i*3}px`, right: `${5+i*10}%`, bottom: `${-2+i*6}%`, color: i%2===0?"#E8A0BB":"#D4638F", opacity: 0.18+i*0.03, animation: `floatFlower ${16+i*3}s ease-in-out ${-i*2}s infinite`, pointerEvents: "none", zIndex: 10 }}>{f}</div>
+      {isM && Array.from({ length: 4 }, (_, i) => (
+        <div key={`cr${i}`} style={{ position: "absolute", width: 20+i*12, height: 20+i*12, borderRadius: "50%", border: `1px solid rgba(196,158,108,0.25)`, right: `${8+i*8}%`, bottom: `${2+i*8}%`, opacity: 0.7, animation: `floatParticle${i%3} ${18+i*4}s ease-in-out ${-i*3}s infinite`, pointerEvents: "none", zIndex: 10 }}/>
       ))}
     </div>
   );
@@ -197,9 +197,9 @@ function LoadingOverlay({ genero, preview }) {
     "Preparando resultados...",
   ];
   const isM    = genero === "mujer";
-  const accent = isM ? "#D4638F" : "#C49E6C";
-  const text   = isM ? "#2D1F2B" : "#F0EDE8";
-  const bg     = isM ? "rgba(255,240,245,0.97)" : "rgba(13,13,13,0.97)";
+  const bg     = isM ? "rgba(250,248,244,0.97)" : "rgba(28,20,16,0.97)";
+  const text   = isM ? "#0D0A06"                : "#F5EFE8";
+  const accent = isM ? "#C49E6C"                : "#C8A050";
 
   useEffect(() => {
     let i = 0;
@@ -230,7 +230,7 @@ function LoadingOverlay({ genero, preview }) {
         </div>
       )}
 
-      <p style={{ fontFamily: "'Courier Prime', monospace", fontSize: "0.7rem", letterSpacing: 4, color: accent, marginBottom: "2rem", textTransform: "uppercase", animation: "fadeUp 0.5s ease" }}>
+      <p style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.7rem", letterSpacing: 4, color: accent, marginBottom: "2rem", textTransform: "uppercase", animation: "fadeUp 0.5s ease" }}>
         Analizando con IA...
       </p>
 
@@ -238,7 +238,7 @@ function LoadingOverlay({ genero, preview }) {
 
       <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
         {steps.map((s, i) => (
-          <div key={i} style={{ fontFamily: "'Montserrat'", fontSize: "0.8rem", fontWeight: i === step ? 500 : 300, color: i === step ? accent : text, opacity: i < step ? 0.3 : i === step ? 1 : 0.15, transition: "all 0.5s", display: "flex", alignItems: "center", gap: "0.8rem" }}>
+          <div key={i} style={{ fontFamily: "'Raleway'", fontSize: "0.8rem", fontWeight: i === step ? 500 : 300, color: i === step ? accent : text, opacity: i < step ? 0.3 : i === step ? 1 : 0.15, transition: "all 0.5s", display: "flex", alignItems: "center", gap: "0.8rem" }}>
             <span style={{ fontSize: "0.6rem", minWidth: 10 }}>{i < step ? "✓" : i === step ? "◉" : "○"}</span>
             {s}
           </div>
@@ -251,39 +251,57 @@ function LoadingOverlay({ genero, preview }) {
 // ─── Tarjeta de producto ──────────────────────────────────────────────────────
 function ProductCard({ t, isM, cBg, cBorder, r, aBg, accent }) {
   const [imgError, setImgError] = useState(false);
+  const [hovered, setHovered]   = useState(false);
   return (
-    <div style={{ background: cBg, border: `1px solid ${cBorder}`, borderRadius: r, overflow: "hidden", backdropFilter: "blur(6px)", animation: "fadeUp 0.5s ease", display: "flex", flexDirection: "column" }}>
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: cBg,
+        border: `1px solid ${hovered ? accent + "55" : cBorder}`,
+        borderRadius: isM ? 20 : 4,
+        overflow: "hidden",
+        animation: "fadeUp 0.5s ease",
+        display: "flex",
+        flexDirection: "column",
+        transform: hovered ? "translateY(-6px)" : "translateY(0)",
+        boxShadow: hovered
+          ? `0 20px 50px rgba(0,0,0,0.22), 0 0 0 1px ${accent}18`
+          : "0 3px 14px rgba(0,0,0,0.10)",
+        transition: "transform 0.38s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.38s ease, border-color 0.38s ease",
+      }}
+    >
       {t.imagen && !imgError ? (
-        <div style={{ width: "100%", height: 200, overflow: "hidden", flexShrink: 0 }}>
+        <div style={{ width: "100%", height: 250, overflow: "hidden", flexShrink: 0 }}>
           <img src={t.imagen} alt={t.producto} onError={() => setImgError(true)}
-            style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s ease" }}
-            onMouseEnter={e => e.target.style.transform = "scale(1.06)"}
-            onMouseLeave={e => e.target.style.transform = "scale(1)"}
+            style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.55s cubic-bezier(0.2,0.8,0.2,1)", transform: hovered ? "scale(1.07)" : "scale(1)" }}
           />
         </div>
       ) : (
-        <div style={{ width: "100%", height: 100, display: "flex", alignItems: "center", justifyContent: "center", background: `${accent}08`, flexShrink: 0 }}>
-          <span style={{ fontSize: "2rem", opacity: 0.25 }}>🛍️</span>
+        <div style={{ width: "100%", height: 140, display: "flex", alignItems: "center", justifyContent: "center", background: `${accent}08`, flexShrink: 0 }}>
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.18 }}>
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
         </div>
       )}
-      <div style={{ padding: "1.2rem", flex: 1, display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.6rem" }}>
-          <span style={{ fontFamily: "'Courier Prime'", fontSize: "0.58rem", padding: "0.15rem 0.5rem", background: aBg, color: accent, borderRadius: isM ? 50 : 2 }}>🌐 {t.nombre}</span>
-          <span style={{ fontFamily: "'Courier Prime'", fontSize: "0.55rem", opacity: 0.35 }}>Envío global</span>
+      <div style={{ padding: "1.5rem 1.6rem", flex: 1, display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.9rem" }}>
+          <span style={{ fontFamily: "'Space Mono'", fontSize: "0.54rem", letterSpacing: 1, padding: "0.22rem 0.65rem", background: aBg, color: accent, borderRadius: isM ? 50 : 3 }}>{t.nombre}</span>
+          <span style={{ fontFamily: "'Space Mono'", fontSize: "0.5rem", opacity: 0.28, letterSpacing: 1 }}>Envío global</span>
         </div>
-        <h4 style={{ fontFamily: "'Cormorant Garamond'", fontSize: "1rem", fontWeight: 700, marginBottom: "0.5rem", lineHeight: 1.3, flex: 1 }}>
+        <h4 style={{ fontFamily: "'Cormorant Garamond'", fontSize: "1.12rem", fontWeight: 700, marginBottom: "0.55rem", lineHeight: 1.35, flex: 1 }}>
           {t.producto?.length > 65 ? t.producto.slice(0, 65) + "…" : t.producto}
         </h4>
         <StarRating rating={t.rating}/>
-        {t.reviews && <p style={{ fontFamily: "'Courier Prime'", fontSize: "0.58rem", opacity: 0.35, marginBottom: "0.5rem" }}>{t.reviews.toLocaleString()} reseñas</p>}
-        <div style={{ fontFamily: "'Cormorant Garamond'", fontSize: "1.5rem", fontWeight: 700, color: accent, marginBottom: "0.3rem" }}>
+        {t.reviews && <p style={{ fontFamily: "'Space Mono'", fontSize: "0.54rem", opacity: 0.28, marginBottom: "0.55rem" }}>{t.reviews.toLocaleString()} reseñas</p>}
+        <div style={{ fontFamily: "'Cormorant Garamond'", fontSize: "1.75rem", fontWeight: 700, color: accent, marginBottom: "0.35rem", letterSpacing: "-0.01em" }}>
           {formatPrecio(t.precio, t.moneda)}
         </div>
-        <p style={{ fontFamily: "'Courier Prime'", fontSize: "0.58rem", opacity: 0.3, marginBottom: "1rem" }}>Tallas: {(t.tallas || []).join(" · ")}</p>
+        <p style={{ fontFamily: "'Space Mono'", fontSize: "0.52rem", opacity: 0.22, marginBottom: "1.3rem", letterSpacing: 0.5 }}>Tallas: {(t.tallas || []).join(" · ")}</p>
         <a href={t.link} target="_blank" rel="noopener noreferrer"
-          style={{ display: "block", textAlign: "center", padding: "0.7rem", fontFamily: "'Montserrat'", fontSize: "0.65rem", fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: isM ? "#fff" : "#0D0D0D", background: accent, textDecoration: "none", borderRadius: isM ? 50 : 2, transition: "opacity 0.2s" }}
-          onMouseEnter={e => e.target.style.opacity = "0.85"}
-          onMouseLeave={e => e.target.style.opacity = "1"}
+          style={{ display: "block", textAlign: "center", padding: "0.85rem", fontFamily: "'Raleway'", fontSize: "0.62rem", fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: isM ? "#0D0A06" : "#1C1410", background: accent, textDecoration: "none", borderRadius: isM ? 50 : 3, transition: "opacity 0.2s, transform 0.2s" }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = "0.88"; e.currentTarget.style.transform = "scale(0.98)"; }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = "1";    e.currentTarget.style.transform = "scale(1)"; }}
         >
           Ver en tienda →
         </a>
@@ -304,16 +322,16 @@ function MainPage({ genero, onSwitch, onHome }) {
   const resultRef = useRef(null);
 
   const isM    = genero === "mujer";
-  const bg     = isM ? "#FFF0F5"               : "#0D0D0D";
-  const text   = isM ? "#2D1F2B"               : "#F0EDE8";
-  const accent = isM ? "#D4638F"               : "#C49E6C";
-  const muted  = isM ? "#9C7A8E"               : "#8A8680";
-  const cBorder= isM ? "#F0C6D4"               : "rgba(255,255,255,0.08)";
-  const glass  = isM ? "rgba(255,240,245,0.92)": "rgba(13,13,13,0.9)";
+  const bg     = isM ? "#FAF8F4"                    : "#1C1410";
+  const text   = isM ? "#0D0A06"                    : "#F0EDE8";
+  const accent = isM ? "#C49E6C"                    : "#C8A050";
+  const muted  = isM ? "#8A7A6A"                    : "#9A8878";
+  const cBorder= isM ? "rgba(196,158,108,0.25)"     : "rgba(200,160,80,0.14)";
+  const glass  = isM ? "rgba(250,248,244,0.94)"     : "rgba(22,16,10,0.93)";
   const r      = isM ? 16 : 2;
-  const cBg    = isM ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.03)";
-  const aBg    = isM ? "rgba(212,99,143,0.08)" : "rgba(196,158,108,0.1)";
-  const aBo    = isM ? "rgba(212,99,143,0.15)" : "rgba(196,158,108,0.2)";
+  const cBg    = isM ? "rgba(255,255,255,0.75)"     : "rgba(255,255,255,0.04)";
+  const aBg    = isM ? "rgba(196,158,108,0.08)"     : "rgba(200,160,80,0.10)";
+  const aBo    = isM ? "rgba(196,158,108,0.22)"     : "rgba(200,160,80,0.22)";
 
   const handleFile = f => {
     if (!f || !f.type.startsWith("image/")) return;
@@ -340,40 +358,51 @@ function MainPage({ genero, onSwitch, onHome }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const btnS = { fontFamily: "'Montserrat'", fontSize: "0.65rem", fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", padding: "0.5rem 1.2rem", border: `1px solid ${cBorder}`, background: "transparent", color: muted, cursor: "pointer", borderRadius: isM ? 50 : 2, transition: "all 0.3s" };
+  const btnS = { fontFamily: "'Raleway'", fontSize: "0.65rem", fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", padding: "0.5rem 1.2rem", border: `1px solid ${cBorder}`, background: "transparent", color: muted, cursor: "pointer", borderRadius: isM ? 50 : 2, transition: "all 0.3s" };
 
   return (
-    <div style={{ minHeight: "100vh", background: bg, color: text, fontFamily: "'Montserrat', sans-serif", position: "relative" }}>
+    <div style={{ minHeight: "100vh", background: bg, color: text, fontFamily: "'Raleway', sans-serif", position: "relative" }}>
 
       {/* Fondo dinámico */}
       <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0,
         background: isM
-          ? "radial-gradient(circle at 20% 25%,rgba(212,99,143,0.1) 0%,transparent 40%),radial-gradient(circle at 80% 55%,rgba(255,182,210,0.12) 0%,transparent 45%)"
-          : "radial-gradient(ellipse at 15% 20%,rgba(196,158,108,0.06) 0%,transparent 50%),radial-gradient(ellipse at 85% 75%,rgba(196,158,108,0.04) 0%,transparent 50%)",
+          ? "radial-gradient(ellipse at 20% 20%, rgba(196,158,108,0.10) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(196,158,108,0.07) 0%, transparent 45%)"
+          : "radial-gradient(ellipse at 15% 20%, rgba(140,90,40,0.14) 0%, transparent 50%), radial-gradient(ellipse at 85% 75%, rgba(200,160,80,0.09) 0%, transparent 50%)",
         animation: "bgDrift 25s ease-in-out infinite" }}/>
 
       {/* Decoraciones */}
       {isM ? (
         <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
-          {["✿","❀","✾","❁","✿","❀","✾","❁","✿","❀","✾","❁","✿","❀","❁","✿","✾","❀"].map((f,i) => (
-            <div key={i} style={{ position: "absolute", fontSize: `${14+(i%5)*5}px`, left: `${3+(i*5.3)%94}%`, top: `${3+(i*7.1)%94}%`, opacity: 0.12+(i%4)*0.04, color: i%3===0?"#F0A6C2":i%3===1?"#D4638F":"#E8A0BB", animation: `floatFlower ${16+i*1.5}s ease-in-out ${-i*2.5}s infinite`, transform: `rotate(${i*43}deg)` }}>{f}</div>
+          {Array.from({ length: 14 }, (_, i) => (
+            <div key={i} style={{
+              position: "absolute",
+              width: 6+(i%5)*10,
+              height: 6+(i%5)*10,
+              borderRadius: "50%",
+              border: `1px solid ${i%2===0?"rgba(196,158,108,0.25)":"rgba(139,100,50,0.20)"}`,
+              left: `${4+(i*6.8)%90}%`,
+              top: `${4+(i*5.9)%90}%`,
+              opacity: 0.6+(i%3)*0.2,
+              animation: `floatParticle${i%3} ${18+i*2}s ease-in-out ${-i*3}s infinite`,
+            }}/>
           ))}
         </div>
       ) : (
         <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
           {Array.from({ length: 18 }, (_, i) => (
-            <div key={i} style={{ position: "absolute", width: 3+(i%4)*2, height: 3+(i%4)*2, borderRadius: "50%", background: "rgba(196,158,108,0.5)", left: `${3+(i*5.6)%94}%`, top: `${3+(i*6.3)%94}%`, opacity: 0.18+(i%3)*0.08, animation: `floatParticle${i%3} ${14+i*1.5}s ease-in-out ${-i*2}s infinite` }}/>
+            <div key={i} style={{ position: "absolute", width: 3+(i%4)*2, height: 3+(i%4)*2, borderRadius: "50%", background: "rgba(200,160,80,0.45)", left: `${3+(i*5.6)%94}%`, top: `${3+(i*6.3)%94}%`, opacity: 0.14+(i%3)*0.06, animation: `floatParticle${i%3} ${14+i*1.5}s ease-in-out ${-i*2}s infinite` }}/>
           ))}
         </div>
       )}
 
       {/* Header */}
-      <header style={{ position: "sticky", top: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "1rem 2.5rem", background: glass, backdropFilter: "blur(20px)", borderBottom: `1px solid ${cBorder}` }}>
-        <div onClick={onHome} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.2rem", fontWeight: 700, letterSpacing: 4, textTransform: "uppercase", color: accent, cursor: "pointer", fontStyle: isM ? "italic" : "normal" }}>
-          Style<span style={{ fontWeight: 300 }}>Match</span>
+      <header style={{ position: "sticky", top: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "1rem 2.5rem", background: glass, backdropFilter: "blur(20px)", borderBottom: `1px solid ${cBorder}`, overflow: "hidden" }}>
+        {isM && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,rgba(139,100,50,0.7),#C49E6C,rgba(230,210,160,0.9),#C49E6C,rgba(139,100,50,0.7))", backgroundSize: "200% 100%", animation: "shimmer 4s ease-in-out infinite", pointerEvents: "none" }}/>}
+        <div onClick={onHome} style={{ fontFamily: "'Tangerine', cursive", fontSize: "2.4rem", fontWeight: 700, letterSpacing: "0.05em", lineHeight: 1, color: accent, cursor: "pointer" }}>
+          AC<span style={{ fontWeight: 400 }}>S</span>
         </div>
         <div style={{ display: "flex", gap: "0.5rem" }}>
-          <button onClick={() => onSwitch(isM ? "hombre" : "mujer")} style={btnS}>Ir a {isM ? "Hombre" : "Mujer"}</button>
+          <button onClick={() => onSwitch(isM ? "hombre" : "mujer")} style={btnS} className="header-switch-btn">Ir a {isM ? "Hombre" : "Mujer"}</button>
           <button onClick={() => setShowContact(true)} style={btnS}>Contacto</button>
           <button onClick={onHome} style={btnS}>Inicio</button>
         </div>
@@ -385,7 +414,7 @@ function MainPage({ genero, onSwitch, onHome }) {
 
           {/* Columna izquierda — upload alineado con el bloque de título */}
           <div style={{ flex: "1.2 1 420px", animation: "fadeUp 0.7s ease both" }}>
-            <p style={{ fontFamily: "'Courier Prime', monospace", fontSize: "0.65rem", letterSpacing: 4, textTransform: "uppercase", color: accent, marginBottom: "1.2rem" }}>
+            <p style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.65rem", letterSpacing: 4, textTransform: "uppercase", color: accent, marginBottom: "1.2rem" }}>
               Fashion AI · Global
             </p>
             <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2.8rem,5.5vw,4.8rem)", fontWeight: 700, fontStyle: isM ? "italic" : "normal", lineHeight: 1, marginBottom: "1.5rem", letterSpacing: isM ? 1 : 3, whiteSpace: "pre-line" }}>
@@ -397,10 +426,10 @@ function MainPage({ genero, onSwitch, onHome }) {
 
             {/* Chips de ejemplos */}
             <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.8rem", flexWrap: "wrap", alignItems: "center" }}>
-              <span style={{ fontFamily: "'Courier Prime'", fontSize: "0.58rem", letterSpacing: 2, opacity: 0.4 }}>PRUEBA CON:</span>
+              <span style={{ fontFamily: "'Space Mono'", fontSize: "0.58rem", letterSpacing: 2, opacity: 0.4 }}>PRUEBA CON:</span>
               {(isM ? EJEMPLOS_MUJER : EJEMPLOS_HOMBRE).map((ej, i) => (
-                <span key={i} style={{ fontFamily: "'Courier Prime'", fontSize: "0.62rem", padding: "0.25rem 0.65rem", border: `1px solid ${cBorder}`, borderRadius: isM ? 50 : 2, color: muted, opacity: 0.7 }}>
-                  {ej.emoji} {ej.label}
+                <span key={i} style={{ fontFamily: "'Space Mono'", fontSize: "0.62rem", padding: "0.25rem 0.65rem", border: `1px solid ${cBorder}`, borderRadius: isM ? 50 : 2, color: muted, opacity: 0.7 }}>
+                  {ej.label}
                 </span>
               ))}
             </div>
@@ -418,11 +447,11 @@ function MainPage({ genero, onSwitch, onHome }) {
                 textAlign: "center",
                 cursor: loading ? "wait" : "pointer",
                 transition: "all 0.4s cubic-bezier(0.4,0,0.2,1)",
-                background: dragOver ? `${accent}15` : isM ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.03)",
+                background: dragOver ? `${accent}15` : isM ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.03)",
                 backdropFilter: "blur(14px)",
                 boxShadow: dragOver
                   ? `0 0 30px ${accent}25`
-                  : isM ? "0 4px 24px rgba(212,99,143,0.06)" : "0 4px 24px rgba(0,0,0,0.12)",
+                  : isM ? "0 4px 24px rgba(224,96,142,0.14)" : "0 4px 24px rgba(0,0,0,0.12)",
                 position: "relative",
                 overflow: "hidden",
                 // Alineado con el maxWidth del copy (420px max) pero full width de la columna
@@ -430,20 +459,24 @@ function MainPage({ genero, onSwitch, onHome }) {
             >
               {/* Barra shimmer en mujer */}
               {isM && !preview && (
-                <div style={{ position: "absolute", top: -2, left: -2, right: -2, height: 3, background: `linear-gradient(90deg,transparent,${accent},#F8D0DE,${accent},transparent)`, backgroundSize: "200% 100%", animation: "shimmer 3s ease-in-out infinite", borderRadius: `${r}px ${r}px 0 0` }}/>
+                <div style={{ position: "absolute", top: -2, left: -2, right: -2, height: 3, background: `linear-gradient(90deg,rgba(139,100,50,0.7),${accent},rgba(230,210,160,0.9),${accent},rgba(139,100,50,0.7))`, backgroundSize: "200% 100%", animation: "shimmer 3s ease-in-out infinite", borderRadius: `${r}px ${r}px 0 0`, boxShadow: `0 0 12px ${accent}60` }}/>
               )}
               {/* Borde dorado animado en hombre */}
               {!isM && !preview && (
-                <div style={{ position: "absolute", top: -2, left: -2, right: -2, height: 2, background: `linear-gradient(90deg,transparent,#C49E6C,#E8D5A3,#C49E6C,transparent)`, backgroundSize: "200% 100%", animation: "shimmer 4s ease-in-out infinite" }}/>
+                <div style={{ position: "absolute", top: -2, left: -2, right: -2, height: 2, background: `linear-gradient(90deg,transparent,#C8A050,#E8D5A3,#C8A050,transparent)`, backgroundSize: "200% 100%", animation: "shimmer 4s ease-in-out infinite" }}/>
               )}
 
               {preview ? (
                 <img src={preview} alt="Preview" style={{ width: "100%", maxHeight: 370, objectFit: "contain", borderRadius: Math.max(r-4, 0) }}/>
               ) : (
                 <div>
-                  <div style={{ fontSize: "2.5rem", marginBottom: "1rem", opacity: 0.3 }}>{isM ? "✨" : "📷"}</div>
+                  <div style={{ marginBottom: "1rem", display: "flex", justifyContent: "center" }}>
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.3 }}>
+                      <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>
+                    </svg>
+                  </div>
                   <p style={{ fontSize: "0.95rem", fontWeight: 300, marginBottom: "0.4rem" }}>Arrastra tu foto aquí</p>
-                  <p style={{ fontFamily: "'Courier Prime', monospace", fontSize: "0.68rem", opacity: 0.35 }}>JPG · PNG · WEBP</p>
+                  <p style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.68rem", opacity: 0.35 }}>JPG · PNG · WEBP</p>
                 </div>
               )}
               <input ref={fileRef} type="file" accept="image/*" style={{ display: "none" }} onChange={e => handleFile(e.target.files[0])} disabled={loading}/>
@@ -451,11 +484,11 @@ function MainPage({ genero, onSwitch, onHome }) {
 
             {preview && !loading && (
               <button onClick={scan}
-                style={{ width: "100%", padding: "1.15rem", marginTop: "1.2rem", fontFamily: "'Montserrat'", fontSize: "0.78rem", fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", border: "none", background: accent, color: isM ? "#fff" : "#0D0D0D", borderRadius: isM ? 50 : 2, cursor: "pointer", boxShadow: `0 8px 24px ${accent}40`, animation: "fadeUp 0.5s ease", transition: "transform 0.2s ease, box-shadow 0.2s ease" }}
+                style={{ width: "100%", padding: "1.15rem", marginTop: "1.2rem", fontFamily: "'Raleway'", fontSize: "0.78rem", fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", border: "none", background: accent, color: isM ? "#0D0A06" : "#0D0D0D", borderRadius: isM ? 50 : 2, cursor: "pointer", boxShadow: `0 8px 24px ${accent}40`, animation: "fadeUp 0.5s ease", transition: "transform 0.2s ease, box-shadow 0.2s ease" }}
                 onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 12px 32px ${accent}55`; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = `0 8px 24px ${accent}40`; }}
               >
-                {isM ? "✨ Analizar Look" : "⚡ Analizar Look"}
+                Analizar Look
               </button>
             )}
           </div>
@@ -471,80 +504,152 @@ function MainPage({ genero, onSwitch, onHome }) {
       {/* ── Resultados ── */}
       <div ref={resultRef}>
         {result && (() => {
-          const p       = result.prenda;
-          const tiendas = result.tiendas || [];
+          const prendas   = result.prendas || [];
+          const es_outfit = result.es_outfit || false;
           return (
             <div style={{ maxWidth: 1100, margin: "0 auto", padding: "2rem 2rem 3rem", animation: "fadeUp 0.8s ease", position: "relative", zIndex: 1 }}>
 
-              {/* Comparación foto + info */}
+              {/* Foto + banner outfit — solo 1 vez */}
               <div style={{ marginBottom: "3rem" }}>
-                <p style={{ fontFamily: "'Courier Prime', monospace", fontSize: "0.65rem", letterSpacing: 3, textTransform: "uppercase", color: accent, marginBottom: "1.5rem" }}>Resultado IA</p>
-                <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start", flexWrap: "wrap" }}>
-                  <div style={{ flexShrink: 0 }}>
-                    <p style={{ fontFamily: "'Courier Prime'", fontSize: "0.58rem", letterSpacing: 2, opacity: 0.4, marginBottom: "0.6rem", textTransform: "uppercase" }}>Tu foto</p>
-                    <div style={{ width: 200, height: 260, overflow: "hidden", border: `2px solid ${accent}`, borderRadius: r, boxShadow: `0 0 30px ${accent}20` }}>
-                      <img src={preview} alt="Tu prenda" style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
+                <p style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.65rem", letterSpacing: 3, textTransform: "uppercase", color: accent, marginBottom: "1.5rem" }}>Resultado IA</p>
+
+                {/* Banner outfit — sólido y prominente */}
+                {es_outfit && (
+                  <div style={{
+                    display: "flex", alignItems: "center", gap: "1.4rem",
+                    padding: "1.1rem 1.6rem",
+                    background: accent,
+                    borderRadius: r,
+                    marginBottom: "2rem",
+                    boxShadow: `0 6px 24px ${accent}45`,
+                  }}>
+                    <span style={{ fontSize: "1.5rem", lineHeight: 1, flexShrink: 0 }}>✦</span>
+                    <div>
+                      <p style={{ fontFamily: "'Space Mono'", fontSize: "0.72rem", fontWeight: 700, letterSpacing: 3, color: isM ? "#0D0A06" : "#0D0D0D", marginBottom: "0.25rem" }}>
+                        OUTFIT COMPLETO
+                      </p>
+                      <p style={{ fontFamily: "'Space Mono'", fontSize: "0.6rem", color: isM ? "#0D0A06" : "#0D0D0D", opacity: 0.65, letterSpacing: 1 }}>
+                        {prendas.length} prendas detectadas · {prendas.map(p => p.tipo_es).join("  ·  ")}
+                      </p>
                     </div>
                   </div>
-                  <div style={{ flex: 1, minWidth: 260 }}>
-                    <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, fontStyle: isM ? "italic" : "normal", lineHeight: 1.1, marginBottom: "0.5rem" }}>
-                      {p.tipo_es} {p.color !== "No detectado" ? p.color : ""}
-                    </h2>
-                    <p style={{ fontFamily: "'Courier Prime', monospace", fontSize: "0.75rem", opacity: 0.5, marginBottom: "1rem" }}>
-                      Confianza: {p.confianza}% · {p.estilo}
-                    </p>
-                    {p.query_busqueda && (
-                      <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.45rem 0.9rem", background: aBg, border: `1px solid ${aBo}`, borderRadius: isM ? 50 : 2, marginBottom: "1.2rem" }}>
-                        <span style={{ fontSize: "0.75rem" }}>🔍</span>
-                        <span style={{ fontFamily: "'Courier Prime'", fontSize: "0.62rem", color: accent, fontStyle: "italic" }}>"{p.query_busqueda}"</span>
-                      </div>
-                    )}
-                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.8rem", fontWeight: 700, color: accent, marginBottom: "1.2rem" }}>
-                      ${p.precio_min} — ${p.precio_max}
-                      <span style={{ fontFamily: "'Courier Prime', monospace", fontSize: "0.62rem", fontWeight: 400, opacity: 0.45, marginLeft: "0.5rem" }}>USD estimado</span>
-                    </div>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-                      {(p.etiquetas || []).slice(0, 8).map((e, i) => (
-                        <span key={i} style={{ fontFamily: "'Courier Prime'", fontSize: "0.62rem", padding: "0.3rem 0.65rem", background: aBg, border: `1px solid ${aBo}`, color: accent, borderRadius: isM ? 50 : 2 }}>{e.nombre} {e.confianza}%</span>
-                      ))}
+                )}
+
+                <div style={{ display: "flex", gap: "2rem", alignItems: "flex-start", flexWrap: "wrap" }}>
+                  <div style={{ flexShrink: 0 }}>
+                    <p style={{ fontFamily: "'Space Mono'", fontSize: "0.58rem", letterSpacing: 2, opacity: 0.4, marginBottom: "0.6rem", textTransform: "uppercase" }}>Tu foto</p>
+                    <div style={{ width: 200, height: 260, overflow: "hidden", border: `2px solid ${accent}`, borderRadius: r, boxShadow: `0 0 30px ${accent}20` }}>
+                      <img src={preview} alt="Tu prenda" style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Tarjetas de detalle */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "1rem", marginBottom: "3rem" }}>
-                {[
-                  { l: "Prenda",   v: p.tipo_es },
-                  { l: "Color",    v: p.color },
-                  { l: "Material", v: p.material_estimado },
-                  { l: "Tallas",   v: (p.tallas_disponibles || []).join(" · "), s: "Estimado" },
-                  { l: "Estilo",   v: p.estilo },
-                ].filter(d => d.v && d.v !== "No detectado").map((d, i) => (
-                  <div key={i} style={{ padding: "1.4rem", background: cBg, border: `1px solid ${cBorder}`, borderRadius: r, backdropFilter: "blur(10px)" }}>
-                    <div style={{ fontFamily: "'Courier Prime', monospace", fontSize: "0.58rem", letterSpacing: 2, textTransform: "uppercase", color: accent, marginBottom: "0.6rem" }}>{d.l}</div>
-                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.25rem", fontWeight: 700 }}>{d.v}</div>
-                    {d.s && <div style={{ fontSize: "0.7rem", fontWeight: 300, opacity: 0.4, marginTop: "0.2rem" }}>{d.s}</div>}
+              {/* Una sección por prenda */}
+              {prendas.map((p, idx) => (
+                <div key={idx}>
+                  {/* Separador entre prendas */}
+                  {idx > 0 && (
+                    <div style={{ height: 1, background: cBorder, margin: "3.5rem 0 0" }}/>
+                  )}
+
+                  {/* Header numerado — solo en outfit mode */}
+                  {es_outfit && (
+                    <div style={{
+                      display: "flex", alignItems: "center", gap: "1.6rem",
+                      padding: "1.3rem 1.8rem",
+                      background: cBg,
+                      border: `1px solid ${cBorder}`,
+                      borderLeft: `4px solid ${accent}`,
+                      borderRadius: r,
+                      margin: idx > 0 ? "2rem 0 2.5rem" : "0 0 2.5rem",
+                    }}>
+                      <span style={{ fontFamily: "'Space Mono'", fontSize: "2.2rem", fontWeight: 700, color: accent, lineHeight: 1, opacity: 0.55, minWidth: 44, flexShrink: 0 }}>
+                        {String(idx + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <p style={{ fontFamily: "'Space Mono'", fontSize: "0.55rem", letterSpacing: 3, color: accent, opacity: 0.7, marginBottom: "0.3rem", textTransform: "uppercase" }}>Prenda detectada</p>
+                        <p style={{ fontFamily: "'Cormorant Garamond'", fontSize: "1.55rem", fontWeight: 700, color: text, fontStyle: isM ? "italic" : "normal", lineHeight: 1.1 }}>
+                          {p.tipo_es}{p.color !== "No detectado" ? ` ${p.color}` : ""}
+                          {p.patron && (
+                            <span style={{ fontSize: "1rem", fontWeight: 400, opacity: 0.65 }}>
+                              {" · "}{p.patron}
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Info de prenda */}
+                  <div style={{ marginBottom: "3rem" }}>
+                    {!es_outfit && (
+                      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 700, fontStyle: isM ? "italic" : "normal", lineHeight: 1.1, marginBottom: "0.5rem" }}>
+                        {p.tipo_es} {p.color !== "No detectado" ? p.color : ""}
+                        {p.patron && <span style={{ fontSize: "60%", opacity: 0.7 }}> · {p.patron}</span>}
+                      </h2>
+                    )}
+                    <p style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.75rem", opacity: 0.5, marginBottom: "1rem" }}>
+                      Confianza: {p.confianza}% · {p.estilo}
+                    </p>
+                    {p.query_busqueda && (
+                      <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.45rem 0.9rem", background: aBg, border: `1px solid ${aBo}`, borderRadius: isM ? 50 : 2, marginBottom: "1.2rem" }}>
+                        <span style={{ fontFamily: "'Space Mono'", fontSize: "0.62rem", color: accent, fontStyle: "italic" }}>"{p.query_busqueda}"</span>
+                      </div>
+                    )}
+                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.8rem", fontWeight: 700, color: accent, marginBottom: "1.2rem" }}>
+                      ${p.precio_min} — ${p.precio_max}
+                      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.62rem", fontWeight: 400, opacity: 0.45, marginLeft: "0.5rem" }}>USD estimado</span>
+                    </div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
+                      {(p.etiquetas || []).slice(0, 8).map((e, i) => (
+                        <span key={i} style={{ fontFamily: "'Space Mono'", fontSize: "0.62rem", padding: "0.3rem 0.65rem", background: aBg, border: `1px solid ${aBo}`, color: accent, borderRadius: isM ? 50 : 2 }}>{e.nombre} {e.confianza}%</span>
+                      ))}
+                    </div>
                   </div>
-                ))}
-              </div>
 
-              {/* Cuándo usarlo */}
-              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", fontWeight: 700, fontStyle: isM ? "italic" : "normal", marginBottom: "1rem" }}>Cuándo usarlo</h3>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "3rem" }}>
-                {(p.ocasion || []).map((o, i) => (
-                  <span key={i} style={{ fontSize: "0.8rem", padding: "0.5rem 1.2rem", border: `1px solid ${cBorder}`, borderRadius: isM ? 50 : 2, color: accent }}>{o}</span>
-                ))}
-              </div>
+                  {/* Tarjetas de detalle */}
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "1rem", marginBottom: "3rem" }}>
+                    {[
+                      { l: "Prenda",   v: p.tipo_es },
+                      { l: "Color",    v: p.color },
+                      { l: "Patrón",   v: p.patron },
+                      { l: "Material", v: p.material_estimado },
+                      { l: "Tallas",   v: (p.tallas_disponibles || []).join(" · "), s: "Estimado" },
+                      { l: "Estilo",   v: p.estilo },
+                    ].filter(d => d.v && d.v !== "No detectado").map((d, i) => (
+                      <div key={i} style={{ padding: "1.4rem", background: cBg, border: `1px solid ${cBorder}`, borderRadius: r, backdropFilter: "blur(10px)" }}>
+                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.58rem", letterSpacing: 2, textTransform: "uppercase", color: accent, marginBottom: "0.6rem" }}>{d.l}</div>
+                        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.25rem", fontWeight: 700 }}>{d.v}</div>
+                        {d.s && <div style={{ fontSize: "0.7rem", fontWeight: 300, opacity: 0.4, marginTop: "0.2rem" }}>{d.s}</div>}
+                      </div>
+                    ))}
+                  </div>
 
-              {/* Tiendas — solo online, sin sección "Looks similares" redundante */}
-              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", fontWeight: 700, fontStyle: isM ? "italic" : "normal", marginBottom: "0.4rem" }}>Dónde comprarlo</h3>
-              <p style={{ fontFamily: "'Courier Prime'", fontSize: "0.6rem", opacity: 0.4, marginBottom: "1.5rem" }}>Tiendas online · Envío internacional</p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "1.2rem" }}>
-                {tiendas.map((t, i) => (
-                  <ProductCard key={`${t.nombre}-${i}`} t={t} isM={isM} cBg={cBg} cBorder={cBorder} r={r} aBg={aBg} accent={accent}/>
-                ))}
-              </div>
+                  {/* Cuándo usarlo — solo para 1ª prenda en outfit */}
+                  {(!es_outfit || idx === 0) && (
+                    <>
+                      <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", fontWeight: 700, fontStyle: isM ? "italic" : "normal", marginBottom: "1rem" }}>Cuándo usarlo</h3>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "3rem" }}>
+                        {(p.ocasion || []).map((o, i) => (
+                          <span key={i} style={{ fontSize: "0.8rem", padding: "0.5rem 1.2rem", border: `1px solid ${cBorder}`, borderRadius: isM ? 50 : 2, color: accent }}>{o}</span>
+                        ))}
+                      </div>
+                    </>
+                  )}
+
+                  {/* Tiendas de esta prenda */}
+                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", fontWeight: 700, fontStyle: isM ? "italic" : "normal", marginBottom: "0.4rem" }}>
+                    {es_outfit ? `Dónde comprar — ${p.tipo_es}` : "Dónde comprarlo"}
+                  </h3>
+                  <p style={{ fontFamily: "'Space Mono'", fontSize: "0.6rem", opacity: 0.4, marginBottom: "1.5rem" }}>Tiendas online · Envío internacional</p>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(295px, 1fr))", gap: "1.6rem", marginBottom: "3rem" }}>
+                    {(p.tiendas || []).map((t, i) => (
+                      <ProductCard key={`${t.nombre}-${i}`} t={t} isM={isM} cBg={cBg} cBorder={cBorder} r={r} aBg={aBg} accent={accent}/>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           );
         })()}
@@ -553,7 +658,7 @@ function MainPage({ genero, onSwitch, onHome }) {
       {/* Nueva búsqueda */}
       {result && (
         <div style={{ textAlign: "center", padding: "2rem 0 3rem", position: "relative", zIndex: 1 }}>
-          <button onClick={reset} style={{ fontFamily: "'Montserrat'", fontSize: "0.8rem", fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", padding: "1.1rem 3rem", border: "none", background: accent, color: isM ? "#fff" : "#0D0D0D", cursor: "pointer", borderRadius: isM ? 50 : 2, boxShadow: isM ? "0 4px 20px rgba(212,99,143,0.3)" : "0 4px 20px rgba(196,158,108,0.3)", transition: "all 0.3s ease" }}>
+          <button onClick={reset} style={{ fontFamily: "'Raleway'", fontSize: "0.8rem", fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", padding: "1.1rem 3rem", border: "none", background: accent, color: isM ? "#0D0A06" : "#0D0D0D", cursor: "pointer", borderRadius: isM ? 50 : 2, boxShadow: isM ? `0 4px 20px ${accent}40` : `0 4px 20px ${accent}40`, transition: "all 0.3s ease" }}>
             ↻ Nueva búsqueda
           </button>
         </div>
@@ -561,7 +666,7 @@ function MainPage({ genero, onSwitch, onHome }) {
 
       {/* Footer */}
       <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "1.5rem 2rem 1rem", borderTop: `1px solid ${cBorder}` }}>
-        <p style={{ fontFamily: "'Courier Prime', monospace", fontSize: "0.6rem", letterSpacing: 2, opacity: 0.3, color: muted, marginBottom: "0.8rem" }}>
+        <p style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: 2, opacity: 0.3, color: muted, marginBottom: "0.8rem" }}>
           Hecho por Andres &amp; Chiara · Powered by AWS Rekognition
         </p>
         <SocialFooter color={muted}/>
@@ -576,46 +681,84 @@ function MainPage({ genero, onSwitch, onHome }) {
 // ─── Landing page ─────────────────────────────────────────────────────────────
 function Landing({ onEnter }) {
   const [hover,    setHover]    = useState(null);
-  const [reveal,   setReveal]   = useState(null);   // "hombre" | "mujer" — estado del reveal radial
+  const [reveal,   setReveal]   = useState(null);
   const [leaving,  setLeaving]  = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onScroll = () => setScrolled(el.scrollTop > 60);
+    el.addEventListener("scroll", onScroll);
+    return () => el.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleEnter = (g) => {
     setReveal(g);
-    // Secuencia: reveal expand (350ms) → fade-out (150ms) → navegar
     setTimeout(() => setLeaving(true), 300);
     setTimeout(() => onEnter(g), 500);
   };
 
-  const revealColor = reveal === "hombre" ? "#C49E6C" : reveal === "mujer" ? "#D4638F" : null;
+  const revealColor = reveal === "hombre" ? "#C8A050" : reveal === "mujer" ? "#F0ECE4" : null;
 
   return (
-    <div style={{
-      position: "fixed", inset: 0, display: "flex", flexDirection: "column",
-      zIndex: 100, fontFamily: "'Montserrat', sans-serif",
+    <div ref={scrollRef} style={{
+      position: "fixed", inset: 0,
+      zIndex: 100, fontFamily: "'Raleway', sans-serif",
       opacity: leaving ? 0 : 1, transition: "opacity 0.2s ease",
+      overflowY: "auto", background: "#0D0D0D",
     }}>
 
-      {/* Capa de reveal radial — aparece al click */}
+      {/* Reveal radial — fixed para cubrir viewport sin importar el scroll */}
       {reveal && (
         <div style={{
-          position: "absolute", inset: 0, zIndex: 200, pointerEvents: "none",
+          position: "fixed", inset: 0, zIndex: 200, pointerEvents: "none",
           background: revealColor,
           animation: "revealExpand 0.45s cubic-bezier(0.2,0.8,0.2,1) forwards",
         }}/>
       )}
 
-      {/* Logo header */}
-      <div style={{ width: "100%", textAlign: "center", padding: "1.3rem 0", background: "#0D0D0D", borderBottom: "1px solid rgba(255,255,255,0.06)", zIndex: 101, flexShrink: 0 }}>
-        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", fontWeight: 300, color: "rgba(240,237,232,0.85)", letterSpacing: 8, textTransform: "uppercase" }}>
-          Style<span style={{ fontWeight: 700, color: "#C49E6C" }}>Match</span>
-        </span>
-        <p style={{ fontFamily: "'Courier Prime', monospace", fontSize: "0.52rem", letterSpacing: 4, color: "rgba(255,255,255,0.22)", marginTop: "0.25rem" }}>
-          AI · FASHION · GLOBAL
-        </p>
-      </div>
+      {/* Hero — ocupa viewport completo */}
+      <div style={{ position: "relative", height: "100vh" }}>
 
-      {/* Split principal */}
-      <div style={{ flex: 1, display: "flex", overflow: "hidden" }}>
+        {/* Navbar — fixed, solo logo, aparece al hacer scroll */}
+        <nav style={{
+          width: "100%", display: "flex", justifyContent: "flex-start",
+          alignItems: "center", padding: "1.2rem 2.5rem", boxSizing: "border-box",
+          background: "transparent",
+          position: "fixed", top: 0, zIndex: 101,
+          opacity: scrolled ? 0 : 1,
+          pointerEvents: scrolled ? "none" : "auto",
+          transition: "opacity 0.4s ease",
+        }}>
+          <a href="#top" onClick={e => { e.preventDefault(); scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" }); }}
+            style={{ textDecoration: "none", cursor: "pointer" }}>
+            <span style={{
+              fontFamily: "'Tangerine', cursive",
+              fontSize: "3.5rem",
+              letterSpacing: "0.05em",
+              color: "#fff",
+              fontWeight: 700,
+              lineHeight: 1,
+            }}>
+              AC
+            </span>
+            <span style={{
+              fontFamily: "'Tangerine', cursive",
+              fontSize: "3.5rem",
+              letterSpacing: "0.05em",
+              color: "#fff",
+              fontWeight: 400,
+              lineHeight: 1,
+            }}>
+              S
+            </span>
+          </a>
+        </nav>
+
+        {/* Split principal — ocupa los 100vh completos */}
+        <div className="landing-split" style={{ position: "absolute", inset: 0, display: "flex" }}>
 
         {/* ── HOMBRE ── */}
         <div
@@ -626,67 +769,90 @@ function Landing({ onEnter }) {
           onKeyDown={e => (e.key === "Enter" || e.key === " ") && handleEnter("hombre")}
           style={{
             flex: hover === "h" ? 1.6 : hover === "m" ? 0.6 : 1,
-            background: "#0D0D0D",
-            color: "#F0EDE8",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            transition: "flex 0.45s cubic-bezier(0.2,0.8,0.2,1)",
             position: "relative",
             overflow: "hidden",
+            cursor: "pointer",
+            transition: "flex 0.5s cubic-bezier(0.2,0.8,0.2,1)",
             outline: "none",
           }}
         >
-          {/* Fondo radial que brilla más en hover */}
+          {/* Foto editorial */}
+          <img
+            src={process.env.PUBLIC_URL + "/images/HOMBRE-LANDING.avif"}
+            alt="Hombre"
+            style={{
+              position: "absolute", inset: 0,
+              width: "100%", height: "100%",
+              objectFit: "cover", objectPosition: "center top",
+              transform: hover === "h" ? "scale(1.04)" : "scale(1)",
+              transition: "transform 0.7s cubic-bezier(0.2,0.8,0.2,1)",
+            }}
+          />
+          {/* Gradiente editorial — oscuro desde abajo */}
           <div style={{
             position: "absolute", inset: 0,
             background: hover === "h"
-              ? "radial-gradient(ellipse at 50% 50%,rgba(196,158,108,0.18) 0%,transparent 65%)"
-              : "radial-gradient(ellipse at 30% 40%,rgba(196,158,108,0.08) 0%,transparent 60%)",
+              ? "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.15) 100%)"
+              : "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 55%, rgba(0,0,0,0.1) 100%)",
             transition: "background 0.5s ease",
-            animation: "bgDrift 18s ease-in-out infinite",
           }}/>
-
-          {/* Partículas doradas — +20% densidad, más visibles en hover */}
-          <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
-            {Array.from({ length: 22 }, (_, i) => (
-              <div key={i} style={{
-                position: "absolute",
-                width: 2+(i%5)*2,
-                height: 2+(i%5)*2,
-                borderRadius: "50%",
-                background: i % 4 === 0 ? "rgba(232,213,163,0.9)" : "rgba(196,158,108,0.7)",
-                left: `${5+(i*4.3)%90}%`,
-                top: `${5+(i*4.7)%90}%`,
-                opacity: hover === "h" ? (0.35+(i%4)*0.12) : (0.2+(i%3)*0.07),
-                transition: "opacity 0.5s ease",
-                animation: `floatParticle${i%3} ${13+i*1.3}s ease-in-out ${-i*1.8}s infinite`,
-                boxShadow: i % 5 === 0 ? "0 0 6px rgba(196,158,108,0.6)" : "none",
-              }}/>
-            ))}
-          </div>
-
-          {/* Contenido — centrado verticalmente con padding consistente */}
-          <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "2rem 2.5rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <p style={{ fontFamily: "'Courier Prime', monospace", fontSize: "0.65rem", letterSpacing: 5, textTransform: "uppercase", opacity: hover === "h" ? 0.6 : 0.4, marginBottom: "1.4rem", transition: "opacity 0.4s" }}>
+          {/* Línea divisoria derecha */}
+          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 1, background: "rgba(255,255,255,0.08)", zIndex: 2 }}/>
+          {/* Contenido — anclado abajo a la izquierda */}
+          <div style={{
+            position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 1, padding: "2.5rem 2.5rem 3rem", color: "#F0EDE8",
+            transform: hover === "m" ? "scale(0.8)" : "scale(1)",
+            transition: "transform 0.5s cubic-bezier(0.2,0.8,0.2,1)",
+            transformOrigin: hover === "h" ? "bottom center" : "bottom left",
+            textAlign: hover === "h" ? "center" : "left",
+          }}>
+            <p style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "0.65rem", letterSpacing: 5, textTransform: "uppercase",
+              color: "#C8A050", marginBottom: "0.8rem",
+              opacity: 1,
+              transition: "opacity 0.4s",
+            }}>
               Moda Masculina
             </p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2.5rem,5vw,4.5rem)", fontWeight: 700, letterSpacing: 6, marginBottom: "1.2rem", transition: "letter-spacing 0.4s ease", letterSpacing: hover === "h" ? "8px" : "6px" }}>
+            <h2 style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "clamp(2.8rem,5.5vw,5rem)",
+              fontWeight: 700, letterSpacing: hover === "h" ? "8px" : "5px",
+              lineHeight: 1, marginBottom: "1rem",
+              transition: "letter-spacing 0.5s ease",
+            }}>
               HOMBRE
             </h2>
-            <p style={{ fontWeight: 200, fontSize: "0.85rem", opacity: 0.45, marginBottom: "2.8rem", maxWidth: 220, lineHeight: 1.75, textAlign: "center" }}>
-              Estilo editorial.<br/>Identifica y encuentra<br/>dónde comprarlo.
+            <p style={{
+              fontFamily: "'Raleway'",
+              fontSize: "0.78rem",
+              fontWeight: 300,
+              lineHeight: 1.6,
+              color: "rgba(240,237,232,0.75)",
+              maxWidth: 320,
+              margin: hover === "h" ? "0 auto 1.8rem" : "0 0 1.8rem",
+              opacity: hover === "h" ? 1 : 0,
+              transform: hover === "h" ? "translateY(0)" : "translateY(6px)",
+              transition: "opacity 0.4s ease 0.05s, transform 0.4s ease 0.05s",
+            }}>
+              Sube tu foto · la IA detecta tu prenda y te dice dónde comprarla
             </p>
-            <button
-              style={{ padding: "0.9rem 2.5rem", background: "#C49E6C", color: "#0D0D0D", border: "none", fontFamily: "'Montserrat'", fontSize: "0.7rem", fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", cursor: "pointer", transition: "transform 0.2s ease, box-shadow 0.2s ease", transform: hover === "h" ? "translateY(-3px)" : "translateY(0)", boxShadow: hover === "h" ? "0 8px 24px rgba(196,158,108,0.5)" : "0 2px 8px rgba(196,158,108,0.2)" }}
-            >
+            <button style={{
+              padding: "0.8rem 2rem",
+              background: "transparent",
+              color: "#F0EDE8",
+              border: "1px solid rgba(240,237,232,0.5)",
+              fontFamily: "'Raleway'", fontSize: "0.62rem",
+              fontWeight: 600, letterSpacing: 3,
+              textTransform: "uppercase", cursor: "pointer",
+              opacity: hover === "h" ? 1 : 0,
+              transform: hover === "h" ? "translateY(0)" : "translateY(8px)",
+              transition: "opacity 0.4s ease, transform 0.4s ease",
+            }}>
               Entrar →
             </button>
           </div>
-
-          <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 1, background: "rgba(255,255,255,0.06)" }}/>
         </div>
 
         {/* ── MUJER ── */}
@@ -698,75 +864,389 @@ function Landing({ onEnter }) {
           onKeyDown={e => (e.key === "Enter" || e.key === " ") && handleEnter("mujer")}
           style={{
             flex: hover === "m" ? 1.6 : hover === "h" ? 0.6 : 1,
-            background: "#FFF0F5",
-            color: "#2D1F2B",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            transition: "flex 0.45s cubic-bezier(0.2,0.8,0.2,1)",
             position: "relative",
             overflow: "hidden",
+            cursor: "pointer",
+            transition: "flex 0.5s cubic-bezier(0.2,0.8,0.2,1)",
             outline: "none",
           }}
         >
-          {/* Fondo que brilla más en hover */}
+          {/* Foto editorial */}
+          <img
+            src={process.env.PUBLIC_URL + "/images/MUJER-LANDING.avif"}
+            alt="Mujer"
+            style={{
+              position: "absolute", inset: 0,
+              width: "100%", height: "100%",
+              objectFit: "cover", objectPosition: "center top",
+              transform: hover === "m" ? "scale(1.04)" : "scale(1)",
+              transition: "transform 0.7s cubic-bezier(0.2,0.8,0.2,1)",
+            }}
+          />
+          {/* Gradiente editorial */}
           <div style={{
             position: "absolute", inset: 0,
             background: hover === "m"
-              ? "radial-gradient(circle at 50% 45%,rgba(212,99,143,0.22) 0%,transparent 55%),radial-gradient(circle at 25% 75%,rgba(255,182,210,0.25) 0%,transparent 45%)"
-              : "radial-gradient(circle at 50% 30%,rgba(212,99,143,0.12) 0%,transparent 50%),radial-gradient(circle at 30% 70%,rgba(255,182,210,0.15) 0%,transparent 45%)",
+              ? "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.1) 100%)"
+              : "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.05) 100%)",
             transition: "background 0.5s ease",
-            animation: "bgDrift 22s ease-in-out infinite reverse",
           }}/>
-
-          {/* Flores — +40% densidad, más brillantes en hover */}
-          <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
-            {["✿","❀","✾","❁","✿","❀","✾","❁","✿","❀","✾","❁","✿","❀","❁","✿","✾","❀","✿","❁"].map((f, i) => (
-              <div key={i} style={{
-                position: "absolute",
-                fontSize: `${13+(i%6)*5}px`,
-                left: `${4+(i*4.8)%92}%`,
-                top: `${4+(i*5.3)%92}%`,
-                opacity: hover === "m" ? (0.22+(i%5)*0.07) : (0.13+(i%4)*0.04),
-                color: i%3===0?"#F0A6C2":i%3===1?"#D4638F":"#E8A0BB",
-                animation: `floatFlower ${14+i*1.4}s ease-in-out ${-i*2.2}s infinite`,
-                transform: `rotate(${i*37}deg)`,
-                transition: "opacity 0.5s ease",
-                textShadow: hover === "m" && i % 3 === 0 ? "0 0 8px rgba(212,99,143,0.4)" : "none",
-              }}>{f}</div>
-            ))}
-          </div>
-
-          {/* Contenido — misma estructura que Hombre para alineamiento visual */}
-          <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "2rem 2.5rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <p style={{ fontFamily: "'Courier Prime', monospace", fontSize: "0.65rem", letterSpacing: 5, textTransform: "uppercase", opacity: hover === "m" ? 0.6 : 0.4, marginBottom: "1.4rem", transition: "opacity 0.4s" }}>
+          {/* Contenido — anclado abajo a la izquierda */}
+          <div style={{
+            position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 1, padding: "2.5rem 2.5rem 3rem", color: "#F0EDE8",
+            transform: hover === "h" ? "scale(0.8)" : "scale(1)",
+            transition: "transform 0.5s cubic-bezier(0.2,0.8,0.2,1)",
+            transformOrigin: hover === "m" ? "bottom center" : "bottom left",
+            textAlign: hover === "m" ? "center" : "left",
+          }}>
+            <p style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "0.65rem", letterSpacing: 5, textTransform: "uppercase",
+              color: "#C49E6C", marginBottom: "0.8rem",
+              opacity: 1,
+              transition: "opacity 0.4s",
+            }}>
               Moda Femenina
             </p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2.5rem,5vw,4.5rem)", fontWeight: 600, fontStyle: "italic", letterSpacing: hover === "m" ? "5px" : "3px", marginBottom: "1.2rem", transition: "letter-spacing 0.4s ease" }}>
+            <h2 style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "clamp(2.8rem,5.5vw,5rem)",
+              fontWeight: 600, fontStyle: "italic",
+              letterSpacing: hover === "m" ? "5px" : "3px",
+              lineHeight: 1, marginBottom: "1rem",
+              transition: "letter-spacing 0.5s ease",
+            }}>
               MUJER
             </h2>
-            <p style={{ fontWeight: 200, fontSize: "0.85rem", opacity: 0.45, marginBottom: "2.8rem", maxWidth: 220, lineHeight: 1.75, textAlign: "center" }}>
-              Elegancia y estilo.<br/>Descubre tu look y<br/>encuéntralo online.
+            <p style={{
+              fontFamily: "'Raleway'",
+              fontSize: "0.78rem",
+              fontWeight: 300,
+              lineHeight: 1.6,
+              color: "rgba(240,237,232,0.75)",
+              maxWidth: 320,
+              margin: hover === "m" ? "0 auto 1.8rem" : "0 0 1.8rem",
+              opacity: hover === "m" ? 1 : 0,
+              transform: hover === "m" ? "translateY(0)" : "translateY(6px)",
+              transition: "opacity 0.4s ease 0.05s, transform 0.4s ease 0.05s",
+            }}>
+              Sube tu foto · la IA detecta tu prenda y te dice dónde comprarla
             </p>
-            <button
-              style={{ padding: "0.9rem 2.5rem", background: "#D4638F", color: "#fff", border: "none", fontFamily: "'Montserrat'", fontSize: "0.7rem", fontWeight: 600, letterSpacing: 3, textTransform: "uppercase", cursor: "pointer", borderRadius: 50, transition: "transform 0.2s ease, box-shadow 0.2s ease", transform: hover === "m" ? "translateY(-3px)" : "translateY(0)", boxShadow: hover === "m" ? "0 8px 24px rgba(212,99,143,0.5)" : "0 2px 8px rgba(212,99,143,0.2)" }}
-            >
+            <button style={{
+              padding: "0.8rem 2rem",
+              background: "transparent",
+              color: "#F0EDE8",
+              border: "1px solid rgba(240,237,232,0.5)",
+              fontFamily: "'Raleway'", fontSize: "0.62rem",
+              fontWeight: 600, letterSpacing: 3,
+              textTransform: "uppercase", cursor: "pointer",
+              borderRadius: 0,
+              opacity: hover === "m" ? 1 : 0,
+              transform: hover === "m" ? "translateY(0)" : "translateY(8px)",
+              transition: "opacity 0.4s ease, transform 0.4s ease",
+            }}>
               Entrar →
             </button>
           </div>
         </div>
       </div>
 
-      {/* Footer landing */}
-      <div style={{ width: "100%", textAlign: "center", padding: "0.8rem", background: "#0D0D0D", fontFamily: "'Courier Prime', monospace", fontSize: "0.52rem", letterSpacing: 3, color: "rgba(240,237,232,0.28)", display: "flex", alignItems: "center", justifyContent: "center", gap: "1.2rem", flexShrink: 0 }}>
-        <span>Hecho por Andres &amp; Chiara</span>
-        <span style={{ opacity: 0.3 }}>·</span>
-        <span>Powered by AWS Rekognition</span>
-        <span style={{ opacity: 0.3 }}>·</span>
-        <span>Google Shopping API</span>
-      </div>
+      </div>{/* end hero wrapper */}
+
+      {/* ── Por qué StyleMatch ── */}
+      <section id="porque" style={{ background: "#F2EAE0", padding: "5rem 2rem" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: 4, textTransform: "uppercase", color: "#C49E6C", textAlign: "center", marginBottom: "0.8rem" }}>
+            Por qué ACstyles
+          </p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem,4vw,3rem)", fontWeight: 700, letterSpacing: 4, color: "#111", textAlign: "center", marginBottom: "4rem" }}>
+            Ve. Sube. Compra.
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "2rem" }}>
+            {[
+              {
+                num: "01",
+                icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C49E6C" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>,
+                title: "Sin palabras clave",
+                desc: "No necesitas saber el nombre de la prenda. Solo sube una foto y la IA hace el resto.",
+              },
+              {
+                num: "02",
+                icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C49E6C" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+                title: "Resultados en segundos",
+                desc: "AWS Rekognition analiza tipo, color y estilo al instante. Miles de SKUs en un clic.",
+              },
+              {
+                num: "03",
+                icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C49E6C" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>,
+                title: "Tiendas globales",
+                desc: "Encuentra exactamente dónde comprarlo en tiendas de todo el mundo, con envío internacional.",
+              },
+            ].map((b, i) => (
+              <div key={i} style={{
+                padding: "2.5rem 2rem",
+                background: "#FAF5EE",
+                borderRadius: 2,
+                boxShadow: "0 2px 20px rgba(0,0,0,0.06)",
+                animation: `fadeUp 0.6s ease ${i * 0.15}s both`,
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "1.4rem" }}>
+                  {b.icon}
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.58rem", letterSpacing: 3, color: "rgba(196,158,108,0.5)" }}>{b.num}</span>
+                </div>
+                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.4rem", fontWeight: 700, color: "#111", marginBottom: "0.8rem" }}>{b.title}</h3>
+                <p style={{ fontWeight: 400, fontSize: "0.88rem", lineHeight: 1.75, color: "#666" }}>{b.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Cómo funciona ── */}
+      <section id="como-funciona" style={{ background: "#FAF5EE", padding: "5rem 2rem" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: 4, textTransform: "uppercase", color: "#C49E6C", textAlign: "center", marginBottom: "0.8rem" }}>
+            Cómo funciona
+          </p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.8rem,3.5vw,2.8rem)", fontWeight: 700, letterSpacing: 3, color: "#111", textAlign: "center", marginBottom: "4rem" }}>
+            Tres pasos. Eso es todo.
+          </h2>
+
+          {/* Dos columnas: imagen + pasos */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "3rem", alignItems: "flex-start" }}>
+
+            {/* Columna izquierda — imagen con tracking frame */}
+            <div style={{ flex: "1 1 320px", maxWidth: 460 }}>
+              <div style={{
+                position: "relative", width: "100%", height: 420,
+                boxShadow: "0 0 40px rgba(196,158,108,0.12)",
+              }}>
+                <img
+                  src={process.env.PUBLIC_URL + "/images/formal-hombre.jpg"}
+                  alt="Análisis IA"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }}
+                />
+
+                {/* Scanner line animada */}
+                <div className="scanner-line" style={{ color: "#C49E6C" }}/>
+
+                {/* 4 esquineros */}
+                <div style={{ position: "absolute", top: 12, left: 12, width: 20, height: 20, borderTop: "2px solid #C49E6C", borderLeft: "2px solid #C49E6C" }}/>
+                <div style={{ position: "absolute", top: 12, right: 12, width: 20, height: 20, borderTop: "2px solid #C49E6C", borderRight: "2px solid #C49E6C" }}/>
+                <div style={{ position: "absolute", bottom: 12, left: 12, width: 20, height: 20, borderBottom: "2px solid #C49E6C", borderLeft: "2px solid #C49E6C" }}/>
+                <div style={{ position: "absolute", bottom: 12, right: 12, width: 20, height: 20, borderBottom: "2px solid #C49E6C", borderRight: "2px solid #C49E6C" }}/>
+
+                {/* Label IA */}
+                <div style={{ position: "absolute", bottom: 12, left: 0, right: 0, textAlign: "center" }}>
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.55rem", letterSpacing: 3, color: "#C49E6C", opacity: 0.6 }}>ANALIZANDO · IA</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Columna derecha — pasos */}
+            <div style={{ flex: "1 1 320px", display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              {[
+                { step: "01", title: "Elige tu modo", desc: "Selecciona Hombre o Mujer para activar el tema y el catálogo correspondiente." },
+                { step: "02", title: "Sube tu foto", desc: "Arrastra o selecciona cualquier foto de ropa — de Instagram, Pinterest, una tienda o tu galería." },
+                { step: "03", title: "Descubre dónde comprarlo", desc: "La IA detecta la prenda y te devuelve tiendas globales donde encontrarla, con precios y links directos." },
+              ].map((s, i) => (
+                <div key={i} style={{
+                  display: "flex", gap: "2rem", alignItems: "flex-start",
+                  padding: "2rem",
+                  background: "#F2EAE0",
+                  borderRadius: 2,
+                  animation: `fadeUp 0.6s ease ${i * 0.2}s both`,
+                }}>
+                  <span style={{ fontFamily: "'Space Mono'", fontSize: "2.5rem", fontWeight: 700, color: "rgba(196,158,108,0.35)", flexShrink: 0, lineHeight: 1 }}>{s.step}</span>
+                  <div>
+                    <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.35rem", fontWeight: 700, color: "#111", marginBottom: "0.5rem" }}>{s.title}</h3>
+                    <p style={{ fontWeight: 400, fontSize: "0.88rem", lineHeight: 1.75, color: "#666" }}>{s.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── Contacto ── */}
+      <section id="contacto" style={{ background: "#F2EAE0", padding: "5rem 2rem" }}>
+        <div style={{ maxWidth: 700, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontFamily: "'Space Mono', monospace", fontSize: "0.6rem", letterSpacing: 4, textTransform: "uppercase", color: "#C49E6C", marginBottom: "0.8rem" }}>
+            Contacto
+          </p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(1.8rem,3.5vw,2.8rem)", fontWeight: 700, letterSpacing: 3, color: "#111", marginBottom: "1.2rem" }}>
+            ¿Tienes preguntas?
+          </h2>
+          <p style={{ fontFamily: "'Raleway', sans-serif", fontSize: "0.9rem", fontWeight: 300, color: "#666", lineHeight: 1.8, marginBottom: "2.5rem" }}>
+            Estamos construyendo algo distinto. Si quieres saber más, colaborar o simplemente saludar — escríbenos.
+          </p>
+          <a href="mailto:me@andresrodas.cloud"
+            style={{
+              display: "inline-block",
+              fontFamily: "'Raleway', sans-serif", fontSize: "0.65rem", fontWeight: 600,
+              letterSpacing: 3, textTransform: "uppercase",
+              color: "#111", textDecoration: "none",
+              padding: "0.9rem 2.5rem",
+              background: "transparent",
+              border: "1px solid rgba(0,0,0,0.25)",
+              borderRadius: 1,
+              transition: "background 0.2s, color 0.2s, borderColor 0.2s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.color = "#F7F5F2"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#111"; }}
+          >
+            me@andresrodas.cloud
+          </a>
+          <div style={{ marginTop: "3rem", display: "flex", justifyContent: "center", gap: "2rem", flexWrap: "wrap" }}>
+            {[
+              {
+                label: "Andrés",
+                href: "https://www.instagram.com/andresrodas.exe/",
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>,
+              },
+              {
+                label: "Chiara",
+                href: "https://www.instagram.com/sunghoon_uvita/",
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>,
+              },
+              {
+                label: "Andrés",
+                href: "https://www.linkedin.com/in/andres-rodas-802309272/",
+                icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="8" y1="11" x2="8" y2="17"/><line x1="8" y1="7" x2="8" y2="8"/><path d="M12 17v-4a2 2 0 0 1 4 0v4"/><line x1="12" y1="11" x2="12" y2="17"/></svg>,
+              },
+            ].map(({ label, href, icon }, i) => (
+              <a key={i} href={href} target="_blank" rel="noreferrer"
+                style={{
+                  display: "flex", alignItems: "center", gap: "0.5rem",
+                  fontFamily: "'Space Mono', monospace", fontSize: "0.5rem", letterSpacing: 2,
+                  color: "#666", textDecoration: "none", textTransform: "uppercase", transition: "color 0.2s",
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = "#C49E6C"}
+                onMouseLeave={e => e.currentTarget.style.color = "#666"}
+              >
+                {icon}{label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer — fondo negro */}
+      <footer style={{ background: "#0D0D0D", fontFamily: "'Raleway', sans-serif" }}>
+
+        {/* Cuerpo principal */}
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "4rem 3rem 3rem", display: "flex", flexWrap: "wrap", gap: "3rem", justifyContent: "space-between" }}>
+
+          {/* Columna 1 — Redes sociales */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", minWidth: 80 }}>
+            {[
+              {
+                label: "Twitter / X",
+                svg: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l16 16M4 20L20 4"/></svg>,
+              },
+              {
+                label: "Instagram",
+                svg: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>,
+              },
+              {
+                label: "Pinterest",
+                svg: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.852 0 1.265.64 1.265 1.408 0 .858-.548 2.143-.83 3.33-.236.995.499 1.806 1.476 1.806 1.772 0 2.982-2.3 2.982-5.022 0-2.07-1.39-3.72-3.96-3.72-2.894 0-4.713 2.163-4.713 4.608 0 .795.233 1.354.6 1.896.166.232.19.326.13.588-.043.184-.14.63-.18.807-.058.238-.232.325-.427.236-1.578-.648-2.316-2.384-2.316-4.334 0-3.236 2.762-7.212 8.24-7.212 4.478 0 7.354 3.3 7.354 6.842 0 4.73-2.614 8.268-6.464 8.268-1.302 0-2.526-.703-2.945-1.494l-.816 3.163c-.295 1.092-1.083 2.464-1.614 3.297.608.177 1.25.272 1.916.272 5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>,
+              },
+            ].map(({ label, svg }) => (
+              <a key={label} href="#" aria-label={label}
+                style={{ color: "rgba(240,237,232,0.5)", display: "inline-flex", transition: "color 0.2s" }}
+                onMouseEnter={e => e.currentTarget.style.color = "#C49E6C"}
+                onMouseLeave={e => e.currentTarget.style.color = "rgba(240,237,232,0.5)"}
+              >
+                {svg}
+              </a>
+            ))}
+          </div>
+
+          {/* Columna 2 — Links grandes sueltos */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem", minWidth: 200 }}>
+            {[
+              { label: "PROBAR ACSTYLES", href: "#top" },
+              { label: "CÓMO FUNCIONA", href: "#como-funciona" },
+              { label: "SOBRE EL PROYECTO", href: "#porque" },
+              { label: "TECNOLOGÍA IA", href: "#como-funciona" },
+            ].map(({ label, href }) => (
+              <a key={label} href={href}
+                onClick={e => { e.preventDefault(); document.querySelector(href)?.scrollIntoView({ behavior: "smooth" }); if (href === "#top") window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.05rem", fontWeight: 600, color: "rgba(240,237,232,0.85)", textDecoration: "none", letterSpacing: 1, transition: "color 0.2s" }}
+                onMouseEnter={e => e.currentTarget.style.color = "#C49E6C"}
+                onMouseLeave={e => e.currentTarget.style.color = "rgba(240,237,232,0.85)"}
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+
+          {/* Columna 3 — Cómo Funciona */}
+          <div style={{ minWidth: 180 }}>
+            <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "rgba(240,237,232,0.9)", marginBottom: "1.2rem" }}>
+              Cómo Funciona
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+              {["¿Qué detecta la IA?", "¿Cómo uso la app?", "Privacidad de imágenes", "Preguntas frecuentes", "Comunícate con nosotros"].map(link => (
+                <a key={link} href="#"
+                  style={{ fontSize: "0.8rem", fontWeight: 400, color: "rgba(240,237,232,0.45)", textDecoration: "none", transition: "color 0.2s", lineHeight: 1.4 }}
+                  onMouseEnter={e => e.currentTarget.style.color = "#F0EDE8"}
+                  onMouseLeave={e => e.currentTarget.style.color = "rgba(240,237,232,0.45)"}
+                >
+                  {link}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Columna 4 — Acerca de StyleMatch */}
+          <div style={{ minWidth: 160 }}>
+            <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: "rgba(240,237,232,0.9)", marginBottom: "1.2rem" }}>
+              Acerca de ACstyles
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+              {["El Proyecto", "AWS Rekognition", "Google Shopping", "Hecho en Perú"].map(link => (
+                <a key={link} href="#"
+                  style={{ fontSize: "0.8rem", fontWeight: 400, color: "rgba(240,237,232,0.45)", textDecoration: "none", transition: "color 0.2s" }}
+                  onMouseEnter={e => e.currentTarget.style.color = "#F0EDE8"}
+                  onMouseLeave={e => e.currentTarget.style.color = "rgba(240,237,232,0.45)"}
+                >
+                  {link}
+                </a>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* Barra inferior */}
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+        <div style={{
+          padding: "1.4rem 3rem",
+          display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between",
+          gap: "1rem", maxWidth: 1200, margin: "0 auto",
+        }}>
+          <span style={{ fontSize: "0.6rem", color: "rgba(240,237,232,0.4)", letterSpacing: 1, fontFamily: "'Space Mono', monospace" }}>
+            © 2026 ACstyles · Todos los derechos reservados.
+          </span>
+          <div style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
+            {["Términos y Condiciones", "Política de privacidad", "Factura Electrónica"].map(link => (
+              <a key={link} href="#"
+                style={{ fontSize: "0.6rem", color: "rgba(240,237,232,0.35)", textDecoration: "none", letterSpacing: 0.5, transition: "color 0.2s", fontFamily: "'Raleway', sans-serif" }}
+                onMouseEnter={e => e.currentTarget.style.color = "#C49E6C"}
+                onMouseLeave={e => e.currentTarget.style.color = "rgba(240,237,232,0.35)"}
+              >
+                {link}
+              </a>
+            ))}
+          </div>
+        </div>
+        </div>
+
+      </footer>
     </div>
   );
 }

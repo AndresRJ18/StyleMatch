@@ -97,3 +97,47 @@
 /* Reset básico */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { -webkit-font-smoothing: antialiased; }
+
+/* ── Landing Split ────────────────────────────────────────────── */
+.landing-split {
+  display: flex;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .landing-split > div { transition: flex 0.4s ease !important; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  /* Landing: paneles apilados verticalmente */
+  .landing-split {
+    flex-direction: column;
+  }
+  .landing-split > div {
+    flex: 1 !important;
+    min-height: 50vh;
+    width: 100% !important;
+  }
+
+  /* Nav logo */
+  nav { padding: 0.8rem 1.2rem !important; }
+  nav span { font-size: 1.4rem !important; }
+
+  /* MainPage header */
+  header { padding: 0.8rem 1.2rem !important; }
+  header button { padding: 0.4rem 0.8rem !important; font-size: 0.58rem !important; }
+
+  /* Hero section */
+  section[style*="padding: \"4rem"] { padding: 2rem 1rem !important; }
+}
+
+/* Mobile pequeño */
+@media (max-width: 480px) {
+  nav span { font-size: 1.1rem !important; }
+
+  /* Ocultar botón "Ir a X" en header para ahorrar espacio */
+  .header-switch-btn { display: none !important; }
+}
